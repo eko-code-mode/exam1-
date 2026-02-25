@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 3 Exam - Data Bus, Address Bus, and Memory</title>
+  <link rel="stylesheet" href="exam.css">
+</head>
+<body>
+  <nav class="exam-nav">
+    <a href="exam.html">← Week 1</a>
+    <a href="exam2.html">Week 2</a>
+    <a href="exam3.html" class="active">Week 3</a>
+    <a href="exam4.html">Week 4</a>
+    <a href="exam5.html">Week 5 →</a>
+  </nav>
+
+  <h1>📝 WEEK 3 EXAM</h1>
+  <h2>Data Bus, Address Bus, and Memory</h2>
+  <p class="subtitle">30 Multiple Choice + 20 Identification</p>
+
+  <hr>
+
+  <h3>PART I: MULTIPLE CHOICE</h3>
+  <h4>Choose the letter of the best answer.</h4>
+
+  <div id="mc-questions"></div>
+
+  <hr>
+
+  <h3>PART II: IDENTIFICATION</h3>
+  <h4>Write the correct term being described in each item.</h4>
+
+  <div id="ident-questions"></div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="checkAll()">Check All Answers</button>
+    <button class="btn btn-primary" onclick="submitExam()">Submit Exam & Record Score</button>
+  </div>
+
+  <div id="score-summary" class="score-summary" style="display: none;"></div>
+
+  <div class="score-records">
+    <h4>📋 Score Records</h4>
+    <div id="score-records-list"></div>
+    <button class="btn btn-secondary" onclick="clearScoreRecords()" style="margin-top: 0.75rem;">Clear Records</button>
+  </div>
+
+  <div class="answer-key">
+    <h3>✅ ANSWER KEY</h3>
+    <details>
+      <summary style="cursor: pointer; font-weight: 600; margin-bottom: 1rem;">Show Answer Key</summary>
+      <h4 style="margin-top: 1rem;">Part I – Multiple Choice</h4>
+      <table>
+        <thead>
+          <tr><th>No.</th><th>Answer</th></tr>
+        </thead>
+        <tbody id="answer-key-mc"></tbody>
+      </table>
+      <h4 style="margin-top: 1.5rem;">Part II – Identification</h4>
+      <table>
+        <thead>
+          <tr><th>No.</th><th>Answer</th></tr>
+        </thead>
+        <tbody id="answer-key-ident"></tbody>
+      </table>
+    </details>
+  </div>
+
+  <script src="exam3.js"></script>
+</body>
+</html>

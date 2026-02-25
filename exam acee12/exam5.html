@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 5 Exam - Performance of a Processor</title>
+  <link rel="stylesheet" href="exam.css">
+</head>
+<body>
+  <nav class="exam-nav">
+    <a href="exam.html">← Week 1</a>
+    <a href="exam2.html">Week 2</a>
+    <a href="exam3.html">Week 3</a>
+    <a href="exam4.html">Week 4</a>
+    <a href="exam5.html" class="active">Week 5</a>
+  </nav>
+
+  <h1>📝 HARD EXAM: Week 5</h1>
+  <h2>Performance of a Processor — Week 5 Only</h2>
+  <p class="subtitle">30 Multiple Choice + 20 Identification + 20 Problem Solving</p>
+
+  <hr>
+  <h3>PART I: MULTIPLE CHOICE</h3>
+  <h4>Choose the best answer. Some require calculation.</h4>
+  <div id="mc-questions"></div>
+
+  <hr>
+  <h3>PART II: IDENTIFICATION</h3>
+  <h4>Write the exact term, formula, or concept being described.</h4>
+  <div id="ident-questions"></div>
+
+  <hr>
+  <h3>PART III: PROBLEM SOLVING</h3>
+  <h4>Show ALL work step by step. No work = No credit.</h4>
+  <div class="problem-section">
+    <div class="problem-item"><strong>Problem 1 — Clock Rate and Cycle Time Conversions.</strong> Given: Processor A: 10 ns; B: 500 ps; C: 2 ns; D: 250 ps; E: 1 ns.<br>a) Convert each to clock rate (MHz or GHz).<br>b) Rank fastest to slowest.<br>c) Processor C runs a program requiring 4×10⁸ cycles. What is the CPU time?<br>d) How many cycles does Processor D complete in 1 μs?</div>
+
+    <div class="problem-item">
+      <strong>Problem 2 — Performance Comparison Using Execution Time.</strong> Four machines run two programs:
+      <table class="problem-table">
+        <thead><tr><th></th><th>Machine W</th><th>Machine X</th><th>Machine Y</th><th>Machine Z</th></tr></thead>
+        <tbody>
+          <tr><td>Program 1</td><td>5 sec</td><td>12 sec</td><td>3 sec</td><td>8 sec</td></tr>
+          <tr><td>Program 2</td><td>200 sec</td><td>60 sec</td><td>280 sec</td><td>100 sec</td></tr>
+        </tbody>
+      </table>
+      a) Calculate total execution time for each machine.<br>b) Rank from best to worst.<br>c) How many times faster is the best than the worst?<br>d) Machine W claims superiority because it wins Program 2 by the widest margin over Y. Is this valid? Justify.
+    </div>
+
+    <div class="problem-item">
+      <strong>Problem 3 — Full CPU Time Calculation.</strong> A processor runs at 2.5 GHz. A program has 4×10⁹ total instructions with:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>Frequency</th><th>CPI</th></tr></thead>
+        <tbody>
+          <tr><td>Integer ALU</td><td>40%</td><td>1</td></tr>
+          <tr><td>Load</td><td>25%</td><td>4</td></tr>
+          <tr><td>Store</td><td>15%</td><td>3</td></tr>
+          <tr><td>Branch</td><td>12%</td><td>2</td></tr>
+          <tr><td>Floating Point</td><td>8%</td><td>10</td></tr>
+        </tbody>
+      </table>
+      a) Verify frequencies sum to 100%.<br>b) Calculate weighted CPI.<br>c) Total CPU clock cycles.<br>d) CPU cycle time in ns.<br>e) CPU execution time in seconds.
+    </div>
+
+    <div class="problem-item"><strong>Problem 4 — Comparing Two Machines.</strong> Same ISA, 10⁹ instructions. Machine A: CT=10 ns, CPI=2.0. Machine B: CT=20 ns, CPI=1.2.<br>a) CPU time A.<br>b) CPU time B.<br>c) Which faster, by what factor?<br>d) Machine C: 3 GHz, CPI=1.8. CPU time?<br>e) Rank all three.</div>
+
+    <div class="problem-item">
+      <strong>Problem 5 — CPI Calculation from Instruction Table.</strong>
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>Frequency</th><th>Cycles</th></tr></thead>
+        <tbody>
+          <tr><td>ALU</td><td>50%</td><td>4</td></tr>
+          <tr><td>Load</td><td>30%</td><td>5</td></tr>
+          <tr><td>Store</td><td>5%</td><td>4</td></tr>
+          <tr><td>Branch</td><td>15%</td><td>2</td></tr>
+        </tbody>
+      </table>
+      a) Weighted CPI.<br>b) Second version: ALU=60%, Load=20%, Store=10%, Branch=10% (same cycles). New CPI?<br>c) Which version runs faster? Justify.<br>d) At 500 MHz, 2×10⁸ instructions—execution time for both?
+    </div>
+
+    <div class="problem-item">
+      <strong>Problem 6 — Effective CPI Using Actual Instruction Counts.</strong> 40 MHz processor, 100,000 total instructions:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>Instruction Count</th><th>Cycles per Instruction</th></tr></thead>
+        <tbody>
+          <tr><td>Integer arithmetic</td><td>45,000</td><td>1</td></tr>
+          <tr><td>Data transfer</td><td>32,000</td><td>2</td></tr>
+          <tr><td>Floating point</td><td>15,000</td><td>2</td></tr>
+          <tr><td>Control transfer</td><td>8,000</td><td>2</td></tr>
+        </tbody>
+      </table>
+      a) Total clock cycles.<br>b) Effective CPI.<br>c) MIPS rate.<br>d) CPU execution time.<br>e) If upgraded to 80 MHz (same program, same CPI), new execution time?
+    </div>
+
+    <div class="problem-item">
+      <strong>Problem 7 — MIPS and MFLOPS Rates.</strong> 400 MHz, 2 million instructions:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>CPI</th><th>Instruction Mix</th></tr></thead>
+        <tbody>
+          <tr><td>Arithmetic and logic</td><td>1</td><td>60%</td></tr>
+          <tr><td>Load/store (cache hit)</td><td>2</td><td>18%</td></tr>
+          <tr><td>Branch</td><td>4</td><td>12%</td></tr>
+          <tr><td>Memory (cache miss)</td><td>8</td><td>10%</td></tr>
+        </tbody>
+      </table>
+      Of 2M instructions, 300,000 are FP operations that complete in 0.5 s.<br>a) Weighted CPI.<br>b) MIPS rate.<br>c) MFLOPS.<br>d) Full CPU time.<br>e) % of execution time on FP?
+    </div>
+
+    <div class="problem-item"><strong>Problem 8 — Extended Processor Time Formula.</strong> Clock 500 MHz, p=3, m=2, k=4, Ic=8×10⁷.<br>a) τ in ns.<br>b) Effective CPI = p+(m×k).<br>c) T = Ic×[p+(m×k)]×τ.<br>d) k→2, new T.<br>e) Speedup.<br>f) k=1, T and speedup?</div>
+
+    <div class="problem-item"><strong>Problem 9 — Amdahl's Law: Feature Enhancement.</strong> 30% computation (enhanced 10×), 70% other.<br>a) Overall speedup.<br>b) If computation 100× faster?<br>c) If infinitely fast?<br>d) Manager claims "30% at 10× should give ≥3× overall." Correct?<br>e) What f at 10× speedup gives 2.0× overall?</div>
+
+    <div class="problem-item"><strong>Problem 10 — Amdahl's Law: Parallel Processors.</strong> 100 s sequential, 90% parallelizable.<br>a) Speedup with 5 processors.<br>b) Speedup with 10 processors.<br>c) Speedup with 20 processors.<br>d) Speedup with 50 processors.<br>e) Max speedup.<br>f) Processors for ≥7×?<br>g) Trend as N doubles?</div>
+
+    <div class="problem-item">
+      <strong>Problem 11 — CPU Time with Three Instruction Types.</strong> 2 GHz, 10⁹ instructions:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>Proportion</th><th>CPI</th></tr></thead>
+        <tbody>
+          <tr><td>Type A</td><td>50%</td><td>1</td></tr>
+          <tr><td>Type B</td><td>30%</td><td>4</td></tr>
+          <tr><td>Type C</td><td>20%</td><td>8</td></tr>
+        </tbody>
+      </table>
+      a) Baseline CPI and CPU time.<br>b) Type C CPI 8→4: new CPI, T, speedup.<br>c) Type B CPI 4→2: new CPI, T, speedup.<br>d) Which optimization better?<br>e) After better one: optimize Type A (can't go &lt;1) or apply other? Compare.
+    </div>
+
+    <div class="problem-item">
+      <strong>Problem 12 — Multi-Compiler Comparison.</strong> 1.5 GHz processor:
+      <table class="problem-table">
+        <thead><tr><th>Compiler</th><th>Instruction Count</th><th>CPI</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>8×10⁸</td><td>2.5</td></tr>
+          <tr><td>B</td><td>1.5×10⁹</td><td>1.2</td></tr>
+          <tr><td>C</td><td>1.0×10⁹</td><td>1.8</td></tr>
+        </tbody>
+      </table>
+      a) CPU time each.<br>b) Rank fastest to slowest.<br>c) MIPS each.<br>d) Compiler D runs 0.80 s, IC=1.2×10⁹. What CPI must it achieve?
+    </div>
+
+    <div class="problem-item"><strong>Problem 13 — Amdahl's Law: Solving for N.</strong> 88% parallelizable (f=0.88).<br>a) Speedup with 4 processors.<br>b) Speedup with 11 processors.<br>c) Max speedup.<br>d) N for ≥6×?<br>e) Team claims 44 processors for 8×. Verify.</div>
+
+    <div class="problem-item">
+      <strong>Problem 14 — MIPS Rate with Instruction Mix.</strong> 200 MHz, Benchmark B:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>Frequency</th><th>Cycles</th></tr></thead>
+        <tbody>
+          <tr><td>Loads & Stores</td><td>30%</td><td>6</td></tr>
+          <tr><td>Arithmetic</td><td>50%</td><td>4</td></tr>
+          <tr><td>All Others</td><td>20%</td><td>3</td></tr>
+        </tbody>
+      </table>
+      a) Weighted CPI.<br>b) MIPS.<br>c) For 10⁸ instructions, execution time.<br>d) Load/Store cycles 6→3: new CPI, MIPS, T.<br>e) Speedup?
+    </div>
+
+    <div class="problem-item"><strong>Problem 15.</strong> 200 MHz, CPI=4.4.<br>a) MIPS.<br>b) 2.2×10⁸ instructions—CPU time.<br>c) Total cycles.<br>d) New processor 400 MHz, same CPI—T and MIPS.<br>e) Speedup.</div>
+
+    <div class="problem-item"><strong>Problem 16 — Amdahl's Law: FP Enhancement.</strong> 40% time on FP. FP sped up by K.<br>a) Write formula.<br>b) Speedup for K=2.<br>c) Speedup for K=5.<br>d) Speedup for K=10.<br>e) Speedup for K→∞.<br>f) Show max=1.67.<br>g) Diminishing returns?</div>
+
+    <div class="problem-item">
+      <strong>Problem 17 — R1 vs R2.</strong> Both 400 MHz. R1 native FP; R2 FP in software:
+      <table class="problem-table">
+        <thead><tr><th>Command</th><th>Share</th><th>R1 CPI</th><th>R2 CPI</th></tr></thead>
+        <tbody>
+          <tr><td>FP addition</td><td>16%</td><td>6</td><td>20</td></tr>
+          <tr><td>FP multiplication</td><td>10%</td><td>8</td><td>32</td></tr>
+          <tr><td>FP division</td><td>8%</td><td>10</td><td>66</td></tr>
+          <tr><td>Non-FP</td><td>66%</td><td>3</td><td>3</td></tr>
+        </tbody>
+      </table>
+      a) CPI R1.<br>b) CPI R2.<br>c) MIPS both.<br>d) 12,000 instructions—CPU time both.<br>e) R1 vs R2 speedup?
+    </div>
+
+    <div class="problem-item"><strong>Problem 18 — Reverse Engineering.</strong> T=6 s, IC=3×10⁹, CPI=4.0.<br>a) Clock rate.<br>b) Cycle time in ns.<br>c) MIPS.<br>d) Double clock rate—new T.<br>e) Halve CPI—new T. Equivalent to (d)?</div>
+
+    <div class="problem-item"><strong>Problem 19.</strong> 45% string, 30% FP, 15% memory, 10% I/O. Upgrades: 1) String 3×; 2) FP 8×; 3) Memory 6×.<br>a) Speedup for Upgrade 1 alone.<br>b) Speedup for Upgrade 2 alone.<br>c) Speedup for Upgrade 3 alone.<br>d) Best single upgrade?<br>e) FP local speedup for 1.25× overall?<br>f) Upgrades 1 & 3 combined—speedup?</div>
+
+    <div class="problem-item">
+      <strong>Problem 20 — Ultimate Week 5 Synthesis.</strong> 3 GHz, 2×10⁹ instructions:
+      <table class="problem-table">
+        <thead><tr><th>Type</th><th>Mix</th><th>CPI</th></tr></thead>
+        <tbody>
+          <tr><td>Integer ALU</td><td>40%</td><td>1</td></tr>
+          <tr><td>Load</td><td>20%</td><td>5</td></tr>
+          <tr><td>Store</td><td>10%</td><td>4</td></tr>
+          <tr><td>Branch</td><td>15%</td><td>2</td></tr>
+          <tr><td>Floating Point</td><td>15%</td><td>8</td></tr>
+        </tbody>
+      </table>
+      <strong>Part A:</strong><br>a) CPI.<br>b) CPU time.<br>c) MIPS.<br><strong>Part B:</strong><br>d) Amdahl: FP 4× faster (use time fraction).<br>e) 80% parallel, 8 processors—speedup.<br>f) Which better?<br><strong>Part C:</strong><br>g) T=Ic×[p+(m×k)]×τ, p=2,m=1,k=3. Match (b)?<br><strong>Part D:</strong><br>h) MFLOPS (3×10⁸ FP ops).<br><strong>Part E:</strong><br>i) ONE change for 2× speedup.<br>j) Combine (d) & (e)—final T?
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="checkAll()">Check All Answers</button>
+    <button class="btn btn-primary" onclick="submitExam()">Submit Exam & Record Score</button>
+  </div>
+
+  <div id="score-summary" class="score-summary" style="display: none;"></div>
+  <div class="score-records">
+    <h4>📋 Score Records (Parts I & II only)</h4>
+    <div id="score-records-list"></div>
+    <button class="btn btn-secondary" onclick="clearScoreRecords()" style="margin-top: 0.75rem;">Clear Records</button>
+  </div>
+
+  <div class="answer-key">
+    <h3>✅ ANSWER KEY</h3>
+    <details>
+      <summary style="cursor: pointer; font-weight: 600; margin-bottom: 1rem;">Show Answer Key</summary>
+
+      <h4 style="margin-top: 1rem;">Part I – Multiple Choice</h4>
+      <table><thead><tr><th>No.</th><th>Answer</th></tr></thead><tbody id="answer-key-mc"></tbody></table>
+
+      <h4 style="margin-top: 1.5rem;">Part II – Identification</h4>
+      <table><thead><tr><th>No.</th><th>Answer</th></tr></thead><tbody id="answer-key-ident"></tbody></table>
+
+      <h4 style="margin-top: 1.5rem;">Part III – Problem Solving (Solutions)</h4>
+
+      <div class="solution-block"><strong>Problem 1.</strong>
+        <p>a) CR = 1/CT: A: 1/(10×10<sup>−9</sup>)=<strong>100 MHz</strong>; B: 1/(500×10<sup>−12</sup>)=<strong>2 GHz</strong>; C: <strong>500 MHz</strong>; D: <strong>4 GHz</strong>; E: <strong>1 GHz</strong></p>
+        <p>b) Fastest→Slowest: <strong>D(4 GHz) > B(2 GHz) > E(1 GHz) > C(500 MHz) > A(100 MHz)</strong></p>
+        <p>c) T = 4×10<sup>8</sup> × 2×10<sup>−9</sup> = <strong>0.8 seconds</strong></p>
+        <p>d) Cycles = 1 μs ÷ 250 ps = 10<sup>−6</sup> ÷ (250×10<sup>−12</sup>) = <strong>4,000 cycles</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 2.</strong>
+        <p>a) W=5+200=<strong>205 sec</strong>; X=12+60=<strong>72 sec</strong>; Y=3+280=<strong>283 sec</strong>; Z=8+100=<strong>108 sec</strong></p>
+        <p>b) Best→Worst: <strong>X(72) > Z(108) > W(205) > Y(283)</strong></p>
+        <p>c) 283 ÷ 72 ≈ <strong>3.93×</strong></p>
+        <p>d) Invalid — W loses overall (205 s vs X's 72 s); total execution time shows X wins.</p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 3.</strong>
+        <p>a) 40+25+15+12+8 = <strong>100% ✓</strong></p>
+        <p>b) CPI = (0.40×1)+(0.25×4)+(0.15×3)+(0.12×2)+(0.08×10) = 0.40+1.00+0.45+0.24+0.80 = <strong>2.89</strong></p>
+        <p>c) Cycles = 4×10<sup>9</sup> × 2.89 = <strong>1.156×10<sup>10</sup></strong></p>
+        <p>d) τ = 1/(2.5×10<sup>9</sup>) = <strong>0.4 ns</strong></p>
+        <p>e) T = 1.156×10<sup>10</sup> × 0.4×10<sup>−9</sup> = <strong>4.624 seconds</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 4.</strong>
+        <p>a) T<sub>A</sub> = 10<sup>9</sup>×2.0×10×10<sup>−9</sup> = <strong>20 sec</strong></p>
+        <p>b) T<sub>B</sub> = 10<sup>9</sup>×1.2×20×10<sup>−9</sup> = <strong>24 sec</strong></p>
+        <p>c) A faster: 24/20 = <strong>1.2×</strong></p>
+        <p>d) T<sub>C</sub> = (10<sup>9</sup>×1.8)/(3×10<sup>9</sup>) = <strong>0.6 sec</strong></p>
+        <p>e) <strong>C(0.6s) > A(20s) > B(24s)</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 5.</strong>
+        <p>a) CPI = (0.50×4)+(0.30×5)+(0.05×4)+(0.15×2) = 2.0+1.5+0.2+0.3 = <strong>4.0</strong></p>
+        <p>b) New CPI = (0.60×4)+(0.20×5)+(0.10×4)+(0.10×2) = <strong>4.0</strong></p>
+        <p>c) <strong>Equal</strong> — both CPI=4.0</p>
+        <p>d) T = (2×10<sup>8</sup>×4.0)/(500×10<sup>6</sup>) = <strong>1.6 sec</strong> (both)</p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 6.</strong>
+        <p>a) Total = 45K×1+32K×2+15K×2+8K×2 = <strong>155,000 cycles</strong></p>
+        <p>b) CPI = 155,000/100,000 = <strong>1.55</strong></p>
+        <p>c) MIPS = 40×10<sup>6</sup>/(1.55×10<sup>6</sup>) ≈ <strong>25.81 MIPS</strong></p>
+        <p>d) T = 155,000/(40×10<sup>6</sup>) = <strong>3.875 ms</strong></p>
+        <p>e) T<sub>new</sub> = 155,000/(80×10<sup>6</sup>) = <strong>1.9375 ms</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 7.</strong>
+        <p>a) CPI = (0.60×1)+(0.18×2)+(0.12×4)+(0.10×8) = <strong>2.24</strong></p>
+        <p>b) MIPS = 400×10<sup>6</sup>/(2.24×10<sup>6</sup>) ≈ <strong>178.57 MIPS</strong></p>
+        <p>c) MFLOPS = 300,000/(0.5×10<sup>6</sup>) = <strong>0.6 MFLOPS</strong></p>
+        <p>d) T = (2×10<sup>6</sup>×2.24)/(400×10<sup>6</sup>) = <strong>11.2 ms</strong></p>
+        <p>e) FP fraction = (0.10×8)/2.24 ≈ <strong>35.7%</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 8.</strong>
+        <p>a) τ = 1/(500×10<sup>6</sup>) = <strong>2 ns</strong></p>
+        <p>b) CPI = 3+(2×4) = <strong>11</strong></p>
+        <p>c) T = 8×10<sup>7</sup>×11×2×10<sup>−9</sup> = <strong>1.76 sec</strong></p>
+        <p>d) New CPI=7; T = <strong>1.12 sec</strong></p>
+        <p>e) Speedup = 1.76/1.12 = <strong>1.571×</strong></p>
+        <p>f) k=1: CPI=5, T=<strong>0.8 sec</strong>; Speedup=<strong>2.2×</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 9.</strong>
+        <p>a) Speedup = 1/[(1−0.3)+(0.3/10)] = 1/0.73 ≈ <strong>1.369×</strong></p>
+        <p>b) 1/[0.7+(0.3/100)] ≈ <strong>1.422×</strong></p>
+        <p>c) 1/0.7 ≈ <strong>1.429×</strong></p>
+        <p>d) <strong>Incorrect.</strong> 30% enhanced 10× gives only ~1.37× overall; 70% unenhanced dominates.</p>
+        <p>e) 2.0 = 1/[(1−f)+(f/10)] → f ≈ <strong>0.556 (55.6%)</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 10.</strong>
+        <p>a) 1/[0.1+0.9/5] ≈ <strong>3.57×</strong>; b) 1/[0.1+0.9/10] ≈ <strong>5.26×</strong>; c) 1/[0.1+0.9/20] ≈ <strong>6.90×</strong>; d) 1/[0.1+0.9/50] ≈ <strong>8.47×</strong></p>
+        <p>e) Max = 1/0.1 = <strong>10×</strong></p>
+        <p>f) 7 = 1/[0.1+0.9/N] → N ≈ <strong>21 processors</strong></p>
+        <p>g) Diminishing returns as N doubles; 10% sequential portion is ceiling.</p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 11.</strong>
+        <p>a) CPI = (0.5×1)+(0.3×4)+(0.2×8) = <strong>3.3</strong>; T = <strong>1.65 sec</strong></p>
+        <p>b) New CPI=2.5, T=1.25s, Speedup=<strong>1.32×</strong></p>
+        <p>c) New CPI=2.7, T=1.35s, Speedup=<strong>1.22×</strong></p>
+        <p>d) <strong>(b) better</strong></p>
+        <p>e) Type A cannot go &lt;1. Apply Type B reduction → CPI=1.9, T=0.95s, better than trying Type A.</p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 12.</strong>
+        <p>a) T<sub>A</sub>=<strong>1.333s</strong>; T<sub>B</sub>=T<sub>C</sub>=<strong>1.20s</strong></p>
+        <p>b) <strong>B and C tie; A slowest</strong></p>
+        <p>c) MIPS<sub>A</sub>=600; MIPS<sub>B</sub>=1,250; MIPS<sub>C</sub>≈833</p>
+        <p>d) CPI<sub>D</sub> = (0.80×1.5×10<sup>9</sup>)/1.2×10<sup>9</sup> = <strong>1.0</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 13.</strong>
+        <p>a) 1/[0.12+0.88/4] ≈ <strong>2.94×</strong>; b) 1/[0.12+0.88/11] = <strong>5.0×</strong>; c) 1/0.12 ≈ <strong>8.33×</strong></p>
+        <p>d) N ≈ <strong>19 processors</strong></p>
+        <p>e) Speedup(44) ≈ <strong>7.14×</strong> — claim of 8× is incorrect.</p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 14.</strong>
+        <p>a) CPI = (0.30×6)+(0.50×4)+(0.20×3) = <strong>4.4</strong></p>
+        <p>b) MIPS ≈ <strong>45.45</strong></p>
+        <p>c) T = <strong>0.22 sec</strong></p>
+        <p>d) New CPI=<strong>3.5</strong>; MIPS≈57.14; T=<strong>0.175 sec</strong></p>
+        <p>e) Speedup ≈ <strong>1.257×</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 15.</strong>
+        <p>a) MIPS ≈ <strong>45.45</strong>; b) T = <strong>4.84 sec</strong>; c) Cycles = <strong>9.68×10<sup>8</sup></strong></p>
+        <p>d) T<sub>new</sub>=<strong>2.42 sec</strong>; MIPS≈90.9</p>
+        <p>e) Speedup = <strong>2.0×</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 16.</strong>
+        <p>a) Speedup = 1/[0.6+(0.4/K)]</p>
+        <p>b) K=2: <strong>1.25×</strong>; c) K=5: <strong>1.47×</strong>; d) K=10: <strong>1.5625×</strong>; e) K→∞: <strong>1.67×</strong></p>
+        <p>f) As K→∞, 0.4/K→0 → 1/0.6 = <strong>1.67</strong> ✓</p>
+        <p>g) Returns diminish; 60% non-FP dominates.</p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 17.</strong>
+        <p>a) CPI<sub>R1</sub> = (0.16×6)+(0.10×8)+(0.08×10)+(0.66×3) = <strong>4.54</strong></p>
+        <p>b) CPI<sub>R2</sub> = (0.16×20)+(0.10×32)+(0.08×66)+(0.66×3) = <strong>13.66</strong></p>
+        <p>c) MIPS<sub>R1</sub>≈88.1; MIPS<sub>R2</sub>≈29.3</p>
+        <p>d) T<sub>R1</sub>≈<strong>136.2 μs</strong>; T<sub>R2</sub>≈<strong>409.8 μs</strong></p>
+        <p>e) R1 ≈ <strong>3.01× faster</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 18.</strong>
+        <p>a) CR = (3×10<sup>9</sup>×4.0)/6 = <strong>2 GHz</strong></p>
+        <p>b) τ = <strong>0.5 ns</strong></p>
+        <p>c) MIPS = <strong>500</strong></p>
+        <p>d) T<sub>new</sub> = <strong>3 sec</strong></p>
+        <p>e) T<sub>new</sub> = <strong>3 sec</strong> — Yes, equivalent to doubling clock rate.</p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 19.</strong>
+        <p>a) 1/[0.55+0.45/3] ≈ <strong>1.429×</strong>; b) 1/[0.70+0.30/8] ≈ <strong>1.356×</strong>; c) 1/[0.85+0.15/6] ≈ <strong>1.143×</strong></p>
+        <p>d) <strong>Upgrade 1 best</strong></p>
+        <p>e) FP needs <strong>3.0×</strong> minimum local speedup</p>
+        <p>f) Combined 1 & 3: new time = 0.15+0.025+0.40 = 0.575; Speedup ≈ <strong>1.739×</strong></p>
+      </div>
+
+      <div class="solution-block"><strong>Problem 20.</strong>
+        <p><strong>Part A:</strong> a) CPI = (0.40×1)+(0.20×5)+(0.10×4)+(0.15×2)+(0.15×8) = <strong>3.30</strong></p>
+        <p>b) T = (2×10<sup>9</sup>×3.30)/(3×10<sup>9</sup>) = <strong>2.20 sec</strong>; c) MIPS ≈ <strong>909</strong></p>
+        <p><strong>Part B:</strong> d) FP time frac = (0.15×8)/3.30 = 0.364; Speedup = 1/[0.636+0.364/4] ≈ <strong>1.375×</strong></p>
+        <p>e) 1/[(1−0.8)+(0.8/8)] ≈ <strong>3.333×</strong>; f) <strong>Parallelization better</strong></p>
+        <p><strong>Part C:</strong> g) Effective CPI = 2+(1×3)=5; T = 2×10<sup>9</sup>×5×0.333×10<sup>−9</sup> = <strong>3.333 sec</strong> — Does NOT match (b); formula uses fixed structural CPI.</p>
+        <p><strong>Part D:</strong> h) MFLOPS = 3×10<sup>8</sup>/(2.20×10<sup>6</sup>) ≈ <strong>136.36 MFLOPS</strong></p>
+        <p><strong>Part E:</strong> i) Double clock to 6 GHz, or halve CPI to 1.65, or halve IC — each gives T=<strong>1.10 sec</strong></p>
+        <p>j) Combined 1.375×3.333 ≈ <strong>4.583×</strong>; Final T = 2.20/4.583 ≈ <strong>0.48 sec</strong></p>
+      </div>
+    </details>
+  </div>
+
+  <script src="exam5.js"></script>
+</body>
+</html>
