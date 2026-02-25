@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 4 Exam - Computer Architecture</title>
+  <link rel="stylesheet" href="exam.css">
+</head>
+<body>
+  <nav class="exam-nav">
+    <a href="exam.html">← Week 1</a>
+    <a href="exam2.html">Week 2</a>
+    <a href="exam3.html">Week 3</a>
+    <a href="exam4.html" class="active">Week 4</a>
+    <a href="exam5.html">Week 5 →</a>
+  </nav>
+
+  <h1>📝 WEEK 4 EXAM</h1>
+  <h2>Computer Architecture — Week 4 Coverage</h2>
+  <p class="subtitle">30 Multiple Choice + 20 Identification + 20 Problem Solving</p>
+
+  <hr>
+
+  <h3>PART I: MULTIPLE CHOICE</h3>
+  <h4>Choose the best answer.</h4>
+  <div id="mc-questions"></div>
+
+  <hr>
+
+  <h3>PART II: IDENTIFICATION</h3>
+  <h4>Write the correct term, component, or concept being described.</h4>
+  <div id="ident-questions"></div>
+
+  <hr>
+
+  <h3>PART III: PROBLEM SOLVING</h3>
+  <h4>Show complete solutions. Partial credit is given for correct process.</h4>
+  <div class="problem-section">
+    <div class="problem-item"><strong>Problem 1.</strong> A processor has a clock cycle time of 2 ns. What is its clock rate in MHz? Then, using that clock rate, compute the CPU time if a program requires 800,000,000 clock cycles to execute.</div>
+    <div class="problem-item"><strong>Problem 2.</strong> Machine X has a clock rate of 3 GHz and a CPI of 1.5. Machine Y has a clock rate of 2 GHz and a CPI of 1.0. Both run the same program with 6,000,000,000 instructions. Compute the CPU time for each machine and determine which is faster and by how much.</div>
+    <div class="problem-item">
+      <strong>Problem 3.</strong> A benchmark program has 200 instructions with the following breakdown:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>Count</th><th>CPI</th></tr></thead>
+        <tbody>
+          <tr><td>Integer ADD</td><td>60</td><td>1</td></tr>
+          <tr><td>LOAD</td><td>80</td><td>4</td></tr>
+          <tr><td>MULTIPLY</td><td>40</td><td>6</td></tr>
+          <tr><td>BRANCH</td><td>20</td><td>2</td></tr>
+        </tbody>
+      </table>
+      Calculate the weighted average CPI for this program.
+    </div>
+    <div class="problem-item"><strong>Problem 4.</strong> Using the CPI from Problem 3, and given 500 MHz clock rate, calculate the total CPU execution time for the 200-instruction benchmark.</div>
+    <div class="problem-item"><strong>Problem 5.</strong> A CPU runs at 1 GHz. Program A needs 5×10⁹ cycles, Program B needs 8×10⁹ cycles. Find CPU time for each and how many times faster Program A is.</div>
+    <div class="problem-item">
+      <strong>Problem 6.</strong> Two computers run the same two programs:
+      <table class="problem-table">
+        <thead><tr><th></th><th>Computer A</th><th>Computer B</th></tr></thead>
+        <tbody>
+          <tr><td>Program 1</td><td>4 sec</td><td>12 sec</td></tr>
+          <tr><td>Program 2</td><td>500 sec</td><td>80 sec</td></tr>
+        </tbody>
+      </table>
+      a) What is the total execution time for each computer?<br>b) How many times faster is the better-performing computer overall?<br>c) Which computer would you prefer if you only ever run Program 1?
+    </div>
+    <div class="problem-item">
+      <strong>Problem 7.</strong> A processor has a clock rate of 2 GHz. A program executes with the following instruction mix:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>Frequency</th><th>CPI</th></tr></thead>
+        <tbody>
+          <tr><td>Arithmetic</td><td>45%</td><td>1</td></tr>
+          <tr><td>Load/Store</td><td>30%</td><td>3</td></tr>
+          <tr><td>Branch</td><td>15%</td><td>2</td></tr>
+          <tr><td>Floating Point</td><td>10%</td><td>8</td></tr>
+        </tbody>
+      </table>
+      a) Calculate the weighted average CPI.<br>b) If the program has 10⁹ instructions, what is the CPU execution time?
+    </div>
+    <div class="problem-item"><strong>Problem 8.</strong> 16-bit instruction: 4-bit opcode, 6-bit source, 6-bit destination.<br>a) Max operations?<br>b) Max locations per operand?<br>c) For 64 operations, how many opcode bits? Operand bits each?</div>
+    <div class="problem-item"><strong>Problem 9.</strong> 1.2×10⁹ instructions, 600 MHz, CPI 3.5. Find<br>a) Total cycles.<br>b) Clock cycle time.<br>c) CPU time.</div>
+    <div class="problem-item"><strong>Problem 10.</strong> Machine A=50 sec, B=200 sec, C=35 sec.<br>a) A vs B?<br>b) C vs A?<br>c) C vs B?<br>d) If D is 2.5× faster than C, D's time?</div>
+    <div class="problem-item"><strong>Problem 11.</strong> 9-bit format: 3-bit opcode, 2-bit dest, 2-bit src1, 2-bit src2.<br>a) Max instructions?<br>b) How many registers?<br>c) Decode 001 01 10 11 (ADD).<br>d) Encode SUB R0, R2, R3 if SUB=010.</div>
+    <div class="problem-item">
+      <strong>Problem 12.</strong> Three programs run on two computers:
+      <table class="problem-table">
+        <thead><tr><th></th><th>Computer P</th><th>Computer Q</th></tr></thead>
+        <tbody>
+          <tr><td>Program A</td><td>2 sec</td><td>6 sec</td></tr>
+          <tr><td>Program B</td><td>50 sec</td><td>10 sec</td></tr>
+          <tr><td>Program C</td><td>200 sec</td><td>180 sec</td></tr>
+        </tbody>
+      </table>
+      a) Calculate total execution time for each computer.<br>b) What is the performance ratio (P vs Q)?<br>c) For which individual programs does Computer P win? For which does Q win?
+    </div>
+    <div class="problem-item">
+      <strong>Problem 13.</strong> A program has 10⁸ instructions. The instruction mix and CPI values are:
+      <table class="problem-table">
+        <thead><tr><th>Type</th><th>Count</th><th>CPI</th></tr></thead>
+        <tbody>
+          <tr><td>ALU</td><td>50,000,000</td><td>1</td></tr>
+          <tr><td>Load</td><td>25,000,000</td><td>5</td></tr>
+          <tr><td>Store</td><td>15,000,000</td><td>4</td></tr>
+          <tr><td>Branch</td><td>10,000,000</td><td>3</td></tr>
+        </tbody>
+      </table>
+      a) Calculate the effective CPI using actual instruction counts.<br>b) If the clock rate is 1 GHz, what is the CPU time?
+    </div>
+    <div class="problem-item"><strong>Problem 14.</strong> Alpha: 4 GHz, CPI 2.5. Beta: 3 GHz, CPI 1.5. 4×10⁸ instructions.<br>a) CPU time both?<br>b) Which faster, by what factor?<br>c) Beta at 4 GHz—beats Alpha?</div>
+    <div class="problem-item">
+      <strong>Problem 15.</strong> A computer runs at 250 MHz. A benchmark program has the following profile:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Class</th><th>Frequency</th><th>Cycles</th></tr></thead>
+        <tbody>
+          <tr><td>Integer ops</td><td>55%</td><td>2</td></tr>
+          <tr><td>Memory ops</td><td>25%</td><td>8</td></tr>
+          <tr><td>FP ops</td><td>10%</td><td>12</td></tr>
+          <tr><td>Branch ops</td><td>10%</td><td>3</td></tr>
+        </tbody>
+      </table>
+      a) Calculate CPI.<br>b) If the program has 5×10⁸ instructions, calculate the execution time in seconds.<br>c) If you redesigned the CPU to reduce memory ops CPI from 8 to 4 (everything else unchanged), what would the new CPI be and how much faster would the program run?
+    </div>
+    <div class="problem-item"><strong>Problem 16.</strong> 2.5 GHz CPU, 3.6×10⁹ cycles.<br>a) Clock cycle time in ns?<br>b) CPU time?<br>c) CPI if 1.8×10⁹ instructions?</div>
+    <div class="problem-item">
+      <strong>Problem 17.</strong> Program execution on a 400 MHz processor results in the following:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>Instruction Count</th><th>CPI</th></tr></thead>
+        <tbody>
+          <tr><td>Arithmetic</td><td>500,000</td><td>1</td></tr>
+          <tr><td>Load</td><td>300,000</td><td>2</td></tr>
+          <tr><td>Store</td><td>100,000</td><td>2</td></tr>
+          <tr><td>Branch</td><td>100,000</td><td>4</td></tr>
+        </tbody>
+      </table>
+      a) Find total clock cycles.<br>b) Find the effective CPI.<br>c) Find CPU execution time.<br>d) Find the MIPS rate.
+    </div>
+    <div class="problem-item">
+      <strong>Problem 18.</strong> Two compilers generate code for the same program on the same 1 GHz processor:
+      <table class="problem-table">
+        <thead><tr><th></th><th>Compiler A</th><th>Compiler B</th></tr></thead>
+        <tbody>
+          <tr><td>Instruction Count</td><td>10⁹</td><td>1.2×10⁹</td></tr>
+          <tr><td>CPI</td><td>2.0</td><td>1.5</td></tr>
+        </tbody>
+      </table>
+      a) Which compiler produces faster-running code?<br>b) By what factor is the faster one better?<br>c) What single change to Compiler B (adjusting only IC while keeping CPI=1.5) would make it exactly match Compiler A's performance?
+    </div>
+    <div class="problem-item"><strong>Problem 19.</strong> 800 MHz, 4×10⁸ instructions, CPI=2.<br>a) CPU time?<br>b) New CPU: 1.6 GHz, CPI=2.8—new time?<br>c) Worth it?<br>d) What CPI at 1.6 GHz for 2× speedup?</div>
+    <div class="problem-item">
+      <strong>Problem 20.</strong> A 2 GHz processor runs a program with the following full instruction mix over 2×10⁹ total instructions:
+      <table class="problem-table">
+        <thead><tr><th>Instruction Type</th><th>Proportion</th><th>CPI</th></tr></thead>
+        <tbody>
+          <tr><td>Integer ALU</td><td>40%</td><td>1</td></tr>
+          <tr><td>FP ALU</td><td>10%</td><td>6</td></tr>
+          <tr><td>Load</td><td>25%</td><td>4</td></tr>
+          <tr><td>Store</td><td>10%</td><td>3</td></tr>
+          <tr><td>Branch (taken)</td><td>8%</td><td>3</td></tr>
+          <tr><td>Branch (not taken)</td><td>7%</td><td>1</td></tr>
+        </tbody>
+      </table>
+      a) Calculate the weighted average CPI.<br>b) Calculate total CPU clock cycles.<br>c) Calculate CPU execution time.<br>d) If you could eliminate all floating-point instructions (replace with integer at CPI=1, but IC increases 15%), what would the new CPU time be? Is this improvement worthwhile?
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="checkAll()">Check All Answers</button>
+    <button class="btn btn-primary" onclick="submitExam()">Submit Exam & Record Score</button>
+  </div>
+
+  <div id="score-summary" class="score-summary" style="display: none;"></div>
+
+  <div class="score-records">
+    <h4>📋 Score Records (Parts I & II only)</h4>
+    <div id="score-records-list"></div>
+    <button class="btn btn-secondary" onclick="clearScoreRecords()" style="margin-top: 0.75rem;">Clear Records</button>
+  </div>
+
+  <div class="answer-key">
+    <h3>✅ ANSWER KEY</h3>
+    <details open>
+      <summary style="cursor: pointer; font-weight: 600; margin-bottom: 1rem;">Show Answer Key</summary>
+
+      <h4 style="margin-top: 1rem;">Part I – Multiple Choice</h4>
+      <table>
+        <thead><tr><th>No.</th><th>Answer</th></tr></thead>
+        <tbody id="answer-key-mc"></tbody>
+      </table>
+
+      <h4 style="margin-top: 1.5rem;">Part II – Identification</h4>
+      <table>
+        <thead><tr><th>No.</th><th>Answer</th></tr></thead>
+        <tbody id="answer-key-ident"></tbody>
+      </table>
+
+      <h4 style="margin-top: 1.5rem;">Part III – Problem Solving (Solutions)</h4>
+      <div class="solution-block">
+        <strong>Problem 1.</strong>
+        <p>Clock rate = 1 ÷ Clock cycle time = 1 ÷ (2 × 10<sup>−9</sup> s) = <strong>500 MHz</strong></p>
+        <p>CPU Time = Cycles × Clock cycle time = 800,000,000 × 2 × 10<sup>−9</sup> = <strong>1.6 seconds</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 2.</strong>
+        <p>T<sub>X</sub> = (6×10<sup>9</sup> × 1.5) ÷ (3×10<sup>9</sup>) = <strong>3.0 sec</strong></p>
+        <p>T<sub>Y</sub> = (6×10<sup>9</sup> × 1.0) ÷ (2×10<sup>9</sup>) = <strong>3.0 sec</strong></p>
+        <p>Both machines take exactly 3.0 seconds — equally fast.</p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 3.</strong>
+        <p>Fractions: ADD = 60/200 = 0.30, LOAD = 80/200 = 0.40, MULT = 40/200 = 0.20, BRANCH = 20/200 = 0.10</p>
+        <p>CPI = (0.30×1) + (0.40×4) + (0.20×6) + (0.10×2) = 0.30 + 1.60 + 1.20 + 0.20 = <strong>3.30</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 4.</strong>
+        <p>Clock cycle time CT = 1 ÷ (500×10<sup>6</sup>) = 2×10<sup>−9</sup> s</p>
+        <p>CPU Time = IC × CPI × CT = 200 × 3.30 × 2×10<sup>−9</sup> = <strong>1.32 μs</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 5.</strong>
+        <p>T<sub>A</sub> = (5×10<sup>9</sup>) ÷ (1×10<sup>9</sup>) = <strong>5 sec</strong>, T<sub>B</sub> = (8×10<sup>9</sup>) ÷ (1×10<sup>9</sup>) = <strong>8 sec</strong></p>
+        <p>Speedup = 8 ÷ 5 = <strong>1.6× faster</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 6.</strong>
+        <p>(a) Total A = 4 + 500 = <strong>504 sec</strong>; Total B = 12 + 80 = <strong>92 sec</strong></p>
+        <p>(b) B is better: 504 ÷ 92 ≈ <strong>5.48× faster</strong></p>
+        <p>(c) <strong>Computer A</strong> — P1 in 4 sec vs B's 12 sec</p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 7.</strong>
+        <p>(a) CPI = (0.45×1) + (0.30×3) + (0.15×2) + (0.10×8) = 0.45 + 0.90 + 0.30 + 0.80 = <strong>2.45</strong></p>
+        <p>(b) CPU Time = (10<sup>9</sup> × 2.45) ÷ (2×10<sup>9</sup>) = <strong>1.225 seconds</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 8.</strong>
+        <p>(a) 2<sup>4</sup> = <strong>16 unique operations</strong></p>
+        <p>(b) 2<sup>6</sup> = <strong>64 locations/registers</strong> per operand</p>
+        <p>(c) 2<sup>n</sup> = 64 → n = <strong>6 bits</strong> opcode. Remaining 10 bits ÷ 2 = <strong>5 bits per operand</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 9.</strong>
+        <p>(a) Total cycles = 1.2×10<sup>9</sup> × 3.5 = <strong>4.2×10<sup>9</sup> cycles</strong></p>
+        <p>(b) CT = 1 ÷ (600×10<sup>6</sup>) ≈ <strong>1.667 ns</strong></p>
+        <p>(c) CPU Time = 4.2×10<sup>9</sup> × 1.667×10<sup>−9</sup> = <strong>7.0 seconds</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 10.</strong>
+        <p>(a) 200 ÷ 50 = <strong>4×</strong> (A faster than B)</p>
+        <p>(b) 50 ÷ 35 ≈ <strong>1.43×</strong> (C faster than A)</p>
+        <p>(c) 200 ÷ 35 ≈ <strong>5.71×</strong> (C faster than B)</p>
+        <p>(d) T<sub>D</sub> = 35 ÷ 2.5 = <strong>14 seconds</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 11.</strong>
+        <p>(a) 2<sup>3</sup> = <strong>8 unique instructions</strong></p>
+        <p>(b) 2<sup>2</sup> = <strong>4 registers</strong> (R0–R3)</p>
+        <p>(c) 001|01|10|11 → Opcode=ADD, Dest=R1, Src1=R2, Src2=R3 → <strong>Add R1, R2, R3</strong></p>
+        <p>(d) SUB=010, R0=00, R2=10, R3=11 → <strong>010 00 10 11</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 12.</strong>
+        <p>(a) Total P = 2+50+200 = <strong>252 sec</strong>; Total Q = 6+10+180 = <strong>196 sec</strong></p>
+        <p>(b) Q faster: 252 ÷ 196 ≈ <strong>1.286×</strong></p>
+        <p>(c) P wins Program A; Q wins Programs B and C</p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 13.</strong>
+        <p>(a) Total cycles = 50M×1 + 25M×5 + 15M×4 + 10M×3 = 265M; CPI = 265M ÷ 100M = <strong>2.65</strong></p>
+        <p>(b) CPU Time = (10<sup>8</sup> × 2.65) ÷ (10<sup>9</sup>) = <strong>0.265 seconds</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 14.</strong>
+        <p>(a) T<sub>Alpha</sub> = (4×10<sup>8</sup>×2.5)÷(4×10<sup>9</sup>) = <strong>0.25 sec</strong>; T<sub>Beta</sub> = (4×10<sup>8</sup>×1.5)÷(3×10<sup>9</sup>) = <strong>0.20 sec</strong></p>
+        <p>(b) Beta faster: 0.25 ÷ 0.20 = <strong>1.25×</strong></p>
+        <p>(c) T<sub>Beta@4GHz</sub> = (4×10<sup>8</sup>×1.5)÷(4×10<sup>9</sup>) = <strong>0.15 sec</strong> — Yes, beats Alpha</p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 15.</strong>
+        <p>(a) CPI = (0.55×2)+(0.25×8)+(0.10×12)+(0.10×3) = 1.10+2.00+1.20+0.30 = <strong>4.60</strong></p>
+        <p>(b) T = (5×10<sup>8</sup>×4.60)÷(250×10<sup>6</sup>) = <strong>9.2 seconds</strong></p>
+        <p>(c) New CPI = 1.10+(0.25×4)+1.20+0.30 = <strong>3.60</strong>; New T = <strong>7.2 sec</strong>; Speedup = 9.2÷7.2 ≈ <strong>1.28×</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 16.</strong>
+        <p>(a) CT = 1 ÷ (2.5×10<sup>9</sup>) = <strong>0.4 ns</strong></p>
+        <p>(b) CPU Time = 3.6×10<sup>9</sup> × 0.4×10<sup>−9</sup> = <strong>1.44 seconds</strong></p>
+        <p>(c) CPI = 3.6×10<sup>9</sup> ÷ 1.8×10<sup>9</sup> = <strong>2.0</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 17.</strong>
+        <p>(a) Total = 500K×1+300K×2+100K×2+100K×4 = <strong>1,700,000 cycles</strong></p>
+        <p>(b) CPI = 1.7M ÷ 1M = <strong>1.7</strong></p>
+        <p>(c) CPU Time = 1.7M ÷ (400×10<sup>6</sup>) = <strong>4.25 ms</strong></p>
+        <p>(d) MIPS = (400×10<sup>6</sup>) ÷ (1.7×10<sup>6</sup>) ≈ <strong>235.3 MIPS</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 18.</strong>
+        <p>(a) T<sub>A</sub> = 2.0 sec, T<sub>B</sub> = 1.8 sec → <strong>Compiler B faster</strong></p>
+        <p>(b) Speedup = 2.0 ÷ 1.8 ≈ <strong>1.11×</strong></p>
+        <p>(c) IC × 1.5 ÷ 10<sup>9</sup> = 2.0 → IC = <strong>1.333×10<sup>9</sup></strong> instructions</p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 19.</strong>
+        <p>(a) T = (4×10<sup>8</sup>×2)÷(800×10<sup>6</sup>) = <strong>1.0 second</strong></p>
+        <p>(b) T<sub>new</sub> = (4×10<sup>8</sup>×2.8)÷(1.6×10<sup>9</sup>) = <strong>0.7 seconds</strong></p>
+        <p>(c) Speedup = 1.0 ÷ 0.7 ≈ <strong>1.43×</strong> — Worth it</p>
+        <p>(d) CPI = (0.5×1.6×10<sup>9</sup>)÷(4×10<sup>8</sup>) = <strong>2.0</strong></p>
+      </div>
+      <div class="solution-block">
+        <strong>Problem 20.</strong>
+        <p>(a) CPI = (0.40×1)+(0.10×6)+(0.25×4)+(0.10×3)+(0.08×3)+(0.07×1) = <strong>2.61</strong></p>
+        <p>(b) Total cycles = 2×10<sup>9</sup> × 2.61 = <strong>5.22×10<sup>9</sup> cycles</strong></p>
+        <p>(c) CPU Time = 5.22×10<sup>9</sup> ÷ (2×10<sup>9</sup>) = <strong>2.61 seconds</strong></p>
+        <p>(d) New IC = 2.3×10<sup>9</sup>, new CPI ≈ 2.296 → New time ≈ <strong>2.64 sec</strong> — Slightly slower; not worthwhile</p>
+      </div>
+    </details>
+  </div>
+
+  <script src="exam4.js"></script>
+</body>
+</html>
