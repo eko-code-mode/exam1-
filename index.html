@@ -1,33 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exam Ace — Computer Architecture Exams</title>
-  <link rel="stylesheet" href="exam.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e3a5f" />
+  <title>Fault Analysis — Practice Exam</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    .landing { text-align: center; padding: 3rem 1.5rem; }
-    .landing h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-    .landing p { color: var(--text-muted); margin-bottom: 2rem; }
-    .exam-links { display: flex; flex-direction: column; gap: 0.75rem; max-width: 400px; margin: 0 auto 2rem; }
-    .exam-links a { display: block; padding: 1rem 1.5rem; background: var(--card); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); font-weight: 600; transition: border-color 0.2s, box-shadow 0.2s; }
-    .exam-links a:hover { border-color: var(--accent); box-shadow: 0 2px 12px var(--shadow); }
-    .exam-links .week { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
-    .footer { font-size: 0.9rem; color: var(--text-muted); }
+    .key-enum-answers { font-size: 0.9rem; line-height: 1.5; }
+    .key-enum-answers p { margin: 0.5rem 0 0; }
+    .key-enum-answers p:first-child { margin-top: 0; }
+    .answer-key-content table { margin-top: 0.5rem; }
   </style>
 </head>
 <body>
-  <div class="landing">
-    <h1>📝 Exam Ace</h1>
-    <p>Interactive Computer Organisation & Architecture Exams</p>
-    <div class="exam-links">
-      <a href="exam.html">Week 1 — Computer Organisation <span class="week">(30 MC + 20 ID)</span></a>
-      <a href="exam2.html">Week 2 — 8085 Microprocessor <span class="week">(30 MC + 20 ID)</span></a>
-      <a href="exam3.html">Week 3 — Data Bus, Address Bus & Memory <span class="week">(30 MC + 20 ID)</span></a>
-      <a href="exam4.html">Week 4 — Computer Architecture <span class="week">(30 MC + 20 ID + 20 PS)</span></a>
-      <a href="exam5.html">Week 5 — Processor Performance <span class="week">(30 MC + 20 ID + 20 PS)</span></a>
+  <header class="exam-header">
+    <div class="header-inner">
+      <p class="course-code">Fault Analysis</p>
+      <p class="subtitle">Symmetrical components, sequence networks &amp; fault currents</p>
+      <h1 class="exam-title">Practice Examination</h1>
+      <p class="instructions-lead">
+        <strong>Part A:</strong> Conceptual multiple choice (40 items).
+        <strong>Part B:</strong> Computation multiple choice (10 items).
+        Submit to score all 50 items; use <strong>Show Answer Key</strong> for Part B worked solutions.
+      </p>
     </div>
-    <p class="footer">Instant feedback • Score recording • Responsive design</p>
-  </div>
+  </header>
+
+  <main class="exam-main">
+    <section class="student-block" aria-labelledby="student-info-heading">
+      <h2 id="student-info-heading" class="section-label">Examinee Information</h2>
+      <div class="student-grid">
+        <label class="field">
+          <span>Name:</span>
+          <input type="text" name="student_name" id="student_name" autocomplete="name" />
+        </label>
+        <label class="field">
+          <span>Section / Student No.:</span>
+          <input type="text" name="student_id" id="student_id" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span>Date:</span>
+          <input type="date" name="exam_date" id="exam_date" />
+        </label>
+      </div>
+    </section>
+
+    <form id="exam-form" novalidate>
+      <section class="exam-part" aria-labelledby="part-a-heading">
+        <h2 id="part-a-heading" class="part-title">Part A: Conceptual Multiple Choice <span class="enum-count">(40 items)</span></h2>
+        <p class="part-direction">Choose the letter of the best answer.</p>
+        <div id="mc-container-a" class="questions"></div>
+      </section>
+
+      <section class="exam-part" aria-labelledby="part-b-heading">
+        <h2 id="part-b-heading" class="part-title">Part B: Computation Multiple Choice <span class="enum-count">(10 items)</span></h2>
+        <p class="part-direction">Choose the letter of the best answer. (Numbers continue from Part A for scoring.)</p>
+        <div id="mc-container-b" class="questions"></div>
+      </section>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Submit Examination</button>
+        <button type="button" class="btn btn-secondary" id="btn-reset">Clear All Responses</button>
+        <button type="button" class="btn btn-outline" id="btn-print">Print / Save as PDF</button>
+      </div>
+    </form>
+
+    <section id="results-panel" class="results-panel hidden" aria-live="polite">
+      <h2 class="part-title">Examination Summary</h2>
+      <p id="results-summary" class="results-summary"></p>
+      <div id="results-detail" class="results-detail"></div>
+    </section>
+
+    <section class="answer-key-section" aria-labelledby="key-heading">
+      <h2 id="key-heading" class="section-label">Answer Key</h2>
+      <p class="key-note">Part B includes short solution notes from the exam key.</p>
+      <button type="button" class="btn btn-outline" id="btn-toggle-key">Show Answer Key</button>
+      <div id="answer-key-content" class="answer-key-content hidden"></div>
+    </section>
+  </main>
+
+  <footer class="exam-footer">
+    <p>
+      <a href="../PEE18/index.html">PEE18 practice exams</a>
+      &middot; Open this page from disk; keep all files in one folder.
+    </p>
+  </footer>
+
+  <script src="exam-fault-analysis.js"></script>
 </body>
 </html>
