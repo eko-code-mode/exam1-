@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e3a5f" />
+  <title>Week 15–16 — Programming Languages &amp; Computer Codes Practice Exam</title>
+  <style>
+/* Formal academic examination layout */
+:root {
+  --ink: #1a1a1a;
+  --muted: #4a4a4a;
+  --border: #2c3e50;
+  --accent: #1e3a5f;
+  --paper: #faf9f7;
+  --rule: #c9c4bc;
+  --success: #1b5e20;
+  --error: #8b1538;
+  --glow-green: rgba(46,125,50,0.55);
+  --glow-red: rgba(198,40,40,0.55);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{font-size:100%;-webkit-text-size-adjust:100%;overflow-x:hidden}
+body{margin:0;font-family:"Georgia","Times New Roman",Times,serif;color:var(--ink);background:var(--paper);line-height:1.5;overflow-x:hidden;padding-left:env(safe-area-inset-left,0);padding-right:env(safe-area-inset-right,0);padding-bottom:env(safe-area-inset-bottom,0)}
+.exam-header{border-bottom:3px double var(--border);background:#fff;padding:2rem clamp(0.875rem,4vw,1.5rem) 1.75rem;padding-top:max(1.25rem,env(safe-area-inset-top,0))}
+.header-inner{max-width:48rem;margin:0 auto;text-align:center}
+.course-code{margin:0;font-size:1.05rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent)}
+.subtitle{margin:0.35rem 0 0;font-size:0.95rem;font-style:italic;color:var(--muted)}
+.exam-title{margin:1rem 0 0.75rem;font-size:clamp(1.2rem,4.8vw + 0.5rem,1.65rem);font-weight:700;letter-spacing:0.02em;border:none;line-height:1.25;hyphens:auto;overflow-wrap:break-word}
+.instructions-lead{margin:0 auto;font-size:clamp(0.88rem,2.5vw,0.95rem);color:var(--muted);max-width:40rem;line-height:1.45;overflow-wrap:break-word}
+.exam-main{max-width:48rem;margin:0 auto;padding:1.75rem clamp(0.875rem,4vw,1.5rem) 3rem;width:100%}
+.student-block{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--rule)}
+.section-label{font-size:0.85rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin:0 0 1rem;font-weight:700}
+.student-grid{display:grid;gap:0.85rem}
+@media(min-width:36rem){.student-grid{grid-template-columns:1fr 1fr}.student-grid .field:first-child{grid-column:1/-1}}
+.field{display:flex;flex-direction:column;gap:0.35rem;font-size:0.95rem}
+.field span{font-weight:600}
+.field input{font-family:inherit;font-size:1rem;padding:0.45rem 0.6rem;border:1px solid var(--rule);border-radius:2px;background:#fff}
+.field input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.exam-part{margin-bottom:2.5rem}
+.part-title{font-size:1.2rem;margin:0 0 0.35rem;padding-bottom:0.35rem;border-bottom:1px solid var(--ink);font-weight:700}
+.part-direction{margin:0.5rem 0 1.25rem;font-style:italic;color:var(--muted);font-size:0.98rem}
+.questions{display:flex;flex-direction:column;gap:1.35rem}
+.mc-item,.id-item,.enum-item{padding:1rem 1rem 1rem 1rem;border-left:3px solid var(--rule);border-radius:2px;transition:box-shadow 0.35s ease,border-left-color 0.35s ease,background-color 0.35s ease}
+.enumeration-subtitle{margin:0.25rem 0 0.75rem;font-size:0.95rem;font-weight:600;color:var(--accent)}
+.enum-rule{border:none;border-top:1px solid var(--rule);margin:0.75rem 0 1rem}
+.footer-note{margin:0.75rem 0 0;font-style:italic;color:var(--muted)}
+.mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct{border-left-color:#2e7d32;background-color:rgba(46,125,50,0.06);box-shadow:0 0 0 1px rgba(46,125,50,0.35),0 0 20px 4px var(--glow-green),0 0 40px 8px rgba(46,125,50,0.15);animation:glow-green-pulse 2s ease-in-out infinite}
+.mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{border-left-color:#c62828;background-color:rgba(198,40,40,0.06);box-shadow:0 0 0 1px rgba(198,40,40,0.4),0 0 20px 4px var(--glow-red),0 0 40px 8px rgba(198,40,40,0.18);animation:glow-red-pulse 2s ease-in-out infinite}
+@keyframes glow-green-pulse{0%,100%{box-shadow:0 0 0 1px rgba(46,125,50,0.35),0 0 16px 3px var(--glow-green),0 0 32px 6px rgba(46,125,50,0.12)}50%{box-shadow:0 0 0 1px rgba(46,125,50,0.45),0 0 24px 6px rgba(46,125,50,0.65),0 0 48px 10px rgba(46,125,50,0.2)}}
+@keyframes glow-red-pulse{0%,100%{box-shadow:0 0 0 1px rgba(198,40,40,0.4),0 0 16px 3px var(--glow-red),0 0 32px 6px rgba(198,40,40,0.14)}50%{box-shadow:0 0 0 1px rgba(198,40,40,0.5),0 0 24px 6px rgba(198,40,40,0.7),0 0 48px 10px rgba(198,40,40,0.22)}}
+.mc-stem{margin:0 0 0.65rem;font-weight:600;overflow-wrap:break-word;hyphens:auto}
+.mc-options{display:flex;flex-direction:column;gap:0.35rem}
+.mc-options label{display:flex;align-items:flex-start;gap:0.65rem;cursor:pointer;font-size:clamp(0.9rem,2.8vw,0.98rem);padding:0.5rem 0.35rem 0.5rem 0.15rem;margin:0 -0.15rem 0 0;min-height:2.75rem;touch-action:manipulation;-webkit-tap-highlight-color:rgba(30,58,95,0.12);border-radius:4px}
+.mc-options label:active{background:rgba(30,58,95,0.06)}
+.mc-options input{margin-top:0.2rem;flex-shrink:0;width:1.15rem;height:1.15rem;accent-color:var(--accent)}
+.mc-options span{overflow-wrap:break-word;min-width:0}
+.identification .id-item label{display:block;font-weight:600;margin-bottom:0.4rem;overflow-wrap:break-word;hyphens:auto;line-height:1.4}
+.identification .id-item input[type="text"]{width:100%;max-width:100%;font-family:inherit;font-size:1rem;padding:0.55rem 0.65rem;min-height:2.75rem;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;background:#fff}
+.identification .id-item input:focus{outline:2px solid var(--accent);outline-offset:0}
+.enumeration-inputs .enum-item label{display:block;font-weight:600;margin-bottom:0.45rem;overflow-wrap:break-word;line-height:1.45}
+.enumeration-inputs .enum-item textarea{width:100%;max-width:100%;min-height:6.5rem;font-family:inherit;font-size:1rem;padding:0.55rem 0.65rem;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;background:#fff;resize:vertical;line-height:1.45}
+.enumeration-inputs .enum-item textarea:focus{outline:2px solid var(--accent);outline-offset:0}
+.actions{display:flex;flex-wrap:wrap;gap:0.65rem;margin:2rem 0;padding-top:1.5rem;border-top:1px solid var(--rule)}
+.btn{font-family:"Segoe UI",system-ui,sans-serif;font-size:0.9rem;padding:0.6rem 1.1rem;min-height:2.75rem;border-radius:4px;cursor:pointer;border:1px solid var(--border);touch-action:manipulation}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+.btn-primary:hover{background:#152d49}
+.btn-secondary{background:#fff;color:var(--ink)}
+.btn-outline{background:transparent;color:var(--accent);border-color:var(--accent)}
+.results-panel{margin-top:1.5rem;padding:1.25rem 1.25rem 1.5rem;border:1px solid var(--border);background:#fff}
+.results-panel.hidden{display:none}
+.results-summary{font-size:1.05rem;margin:0 0 1rem;font-weight:600}
+.results-detail{font-size:0.92rem;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.results-detail h3{font-size:0.95rem;margin:1.25rem 0 0.5rem;font-family:"Segoe UI",system-ui,sans-serif;font-weight:600}
+.results-detail h3:first-child{margin-top:0}
+.results-detail table{width:100%;min-width:16rem;border-collapse:collapse;margin-top:0.75rem}
+.results-detail th,.results-detail td{text-align:left;padding:0.45rem 0.5rem;border:1px solid var(--rule);overflow-wrap:anywhere;word-break:break-word}
+.results-detail th{background:#eef1f4;font-family:"Segoe UI",system-ui,sans-serif;font-size:0.8rem}
+.correct{color:var(--success)}
+.incorrect{color:var(--error)}
+.answer-key-section{margin-top:2.5rem;padding-top:1.5rem;border-top:2px solid var(--rule)}
+.key-note{font-size:0.9rem;color:var(--muted);margin:0 0 1rem}
+.answer-key-content{margin-top:1rem;padding:1rem;background:#fff;border:1px solid var(--rule);font-size:0.9rem}
+.answer-key-content.hidden{display:none}
+.key-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,7.5rem),1fr));gap:0.35rem 0.75rem}
+.key-grid div{padding:0.2rem 0;border-bottom:1px dotted var(--rule)}
+.exam-footer{text-align:center;padding:1.25rem clamp(0.75rem,3vw,1.5rem);font-size:clamp(0.75rem,2.5vw,0.8rem);color:var(--muted);border-top:1px solid var(--rule);background:#fff;line-height:1.6;overflow-wrap:break-word}
+@media(max-width:36rem){
+  .course-code{font-size:0.82rem;letter-spacing:0.03em}
+  .subtitle{font-size:0.88rem}
+  .part-title{font-size:1.08rem}
+  .part-direction{font-size:0.9rem}
+  .mc-item,.id-item,.enum-item{padding-left:0.75rem;padding-right:0;margin-inline:0}
+  .enumeration-inputs .enum-item textarea{font-size:16px;min-height:7rem}
+  .mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct{animation:none;box-shadow:0 0 0 1px rgba(46,125,50,0.35),0 0 14px 3px var(--glow-green)}
+  .mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{animation:none;box-shadow:0 0 0 1px rgba(198,40,40,0.4),0 0 14px 3px var(--glow-red)}
+  .actions{flex-direction:column;align-items:stretch}
+  .actions .btn{width:100%}
+  .results-panel{padding:1rem}
+  .results-detail th,.results-detail td{font-size:0.8rem;padding:0.35rem 0.4rem}
+  .field input,.identification .id-item input[type="text"]{font-size:16px}
+  .key-grid{grid-template-columns:1fr}
+  .answer-key-content{padding:0.75rem;font-size:0.85rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .mc-item,.id-item,.enum-item{transition:none}
+  .mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct,
+  .mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{animation:none}
+}
+@media print{
+  .actions,#btn-toggle-key{display:none!important}
+  body{background:#fff}
+  .mc-options input{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct,
+  .mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{animation:none;box-shadow:none}
+  .mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct{border-left:4px solid #2e7d32;background:rgba(46,125,50,0.08)}
+  .mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{border-left:4px solid #c62828;background:rgba(198,40,40,0.08)}
+}
+  </style>
+</head>
+<body>
+
+<header class="exam-header">
+  <div class="header-inner">
+    <p class="course-code">Computer Organization — Week 15–16</p>
+    <p class="subtitle">Programming Languages, Character Codes &amp; Computer Terminology</p>
+    <h1 class="exam-title">📝 Week 15–16 Practice Examination</h1>
+    <p class="instructions-lead">Part I: 20 multiple choice. Part II: 10 identification. Part III: 10 enumeration. Green glow = correct, red glow = incorrect as you answer. Submit for full scoring.</p>
+  </div>
+</header>
+
+<main class="exam-main">
+  <section class="student-block" aria-labelledby="student-info-heading">
+    <h2 id="student-info-heading" class="section-label">Examinee Information</h2>
+    <div class="student-grid">
+      <label class="field">
+        <span>Name:</span>
+        <input type="text" name="student_name" id="student_name" autocomplete="name" />
+      </label>
+      <label class="field">
+        <span>Section / Student No.:</span>
+        <input type="text" name="student_id" id="student_id" autocomplete="off" />
+      </label>
+      <label class="field">
+        <span>Date:</span>
+        <input type="date" name="exam_date" id="exam_date" />
+      </label>
+    </div>
+  </section>
+
+  <form id="exam-form" novalidate>
+
+    <!-- PART I -->
+    <section class="exam-part" aria-labelledby="part1-heading">
+      <h2 id="part1-heading" class="part-title">Part I: Multiple Choice</h2>
+      <p class="part-direction">Choose the letter of the best answer. (1 point each)</p>
+      <div id="mc-container" class="questions"></div>
+    </section>
+
+    <!-- PART II -->
+    <section class="exam-part" aria-labelledby="part2-heading">
+      <h2 id="part2-heading" class="part-title">Part II: Identification</h2>
+      <p class="part-direction">Identify the correct term being described. Write your answer in the space provided. (2 points each)</p>
+      <div id="id-container" class="questions identification"></div>
+    </section>
+
+    <!-- PART III -->
+    <section class="exam-part enumeration-block" aria-labelledby="enum-heading">
+      <h2 id="enum-heading" class="part-title">Part III: Enumeration</h2>
+      <p class="enumeration-subtitle">List the correct items being asked in each number. Write one item per line.</p>
+      <hr class="enum-rule" />
+      <p class="part-direction">Write each answer on its own line. For pair items (e.g. language — feature), write both on the same line separated by a dash.</p>
+      <div id="enum-container" class="questions enumeration-inputs"></div>
+    </section>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary">Submit Examination</button>
+      <button type="button" class="btn btn-secondary" id="btn-reset">Clear All Responses</button>
+      <button type="button" class="btn btn-outline" id="btn-download">⬇ Download Exam</button>
+      <button type="button" class="btn btn-outline" id="btn-print">Print / Save as PDF</button>
+    </div>
+  </form>
+
+  <section id="results-panel" class="results-panel hidden" aria-live="polite">
+    <h2 class="part-title">Examination Summary</h2>
+    <p id="results-summary" class="results-summary"></p>
+    <div id="results-detail" class="results-detail"></div>
+  </section>
+
+  <section class="answer-key-section" aria-labelledby="key-heading">
+    <h2 id="key-heading" class="section-label">Reference — Answer Key</h2>
+    <p class="key-note">For self-check use after attempting all items.</p>
+    <button type="button" class="btn btn-outline" id="btn-toggle-key">Show Answer Key</button>
+    <div id="answer-key-content" class="answer-key-content hidden"></div>
+  </section>
+</main>
+
+<footer class="exam-footer">
+  <p>Week 15–16 · Programming Languages &amp; Character Codes in Computer Systems</p>
+  <p class="footer-note">Good luck, Jericho! 💪</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* =====================================================================
+     PART I — MULTIPLE CHOICE  (20 items)
+  ===================================================================== */
+  const MC_QUESTIONS = [
+    { n:1,  q:"Which programming language was developed at Dartmouth University in 1964 as an interactive language for use with time-sharing systems?",
+      opts:["FORTRAN","COBOL","BASIC","PASCAL"] },
+    { n:2,  q:"FORTRAN was developed in 1957 by IBM primarily for what purpose?",
+      opts:["Business data processing","Scientific and engineering calculations","Telescope process control","Interactive time-sharing"] },
+    { n:3,  q:"Which type of programming language uses mnemonic codes to represent instruction operations?",
+      opts:["Machine Language","High Level Language","Assembly Language","RPG"] },
+    { n:4,  q:"Machine Language consists of which of the following?",
+      opts:["English-like words and syntax","Mnemonic instruction codes","Binary instruction codes (0s and 1s)","Symbolic algebraic expressions"] },
+    { n:5,  q:"In BCD (Binary Coded Decimal), what is the 4-bit binary equivalent of decimal digit 6?",
+      opts:["0101","0111","1001","0110"] },
+    { n:6,  q:"What is the key rule of Excess-3 coding when converting a decimal digit?",
+      opts:["Subtract 3 from the digit before converting to binary","Multiply the digit by 3 then convert","Add 3 to the digit before encoding it in binary","Divide the digit by 3 and take the remainder"] },
+    { n:7,  q:"In Excess-3 code, what is the encoded binary value of decimal digit 4?",
+      opts:["0100","0110","0111","1000"] },
+    { n:8,  q:"Gray Code belongs to a class of codes called minimum-change-codes because:",
+      opts:["It uses the fewest bits to represent numbers","Only one bit changes when going from one number to the next","It requires less memory than BCD","It adds a minimum value to each digit"] },
+    { n:9,  q:"ASCII code is a ___-bit character code allowing a maximum of ___ different characters.",
+      opts:["8-bit, 256","5-bit, 64","6-bit, 64","7-bit, 128"] },
+    { n:10, q:"Which alphanumeric code is an 8-bit character code widely used in mainframe computers, allowing 256 different characters?",
+      opts:["ASCII","Baudot Code","EBCDIC","Card Code"] },
+    { n:11, q:"The Baudot Code was developed by French Postal Engineer Thomas Murray and named after Emile Baudot. How many bits does it use?",
+      opts:["6 bits","7 bits","8 bits","5 bits"] },
+    { n:12, q:"Which of the following correctly lists all four number systems used in digital technology?",
+      opts:["Binary, Octal, Hexadecimal, Roman","Decimal, Binary, Octal, Hexadecimal","Binary, Ternary, Octal, Decimal","Hexadecimal, Octal, Quaternary, Binary"] },
+    { n:13, q:"In the Hexadecimal number system, what decimal value does the symbol 'D' represent?",
+      opts:["10","11","12","13"] },
+    { n:14, q:"In the FORTH programming language, programs are called:",
+      opts:["Functions","Scripts","Words","Modules"] },
+    { n:15, q:"In PL/I (Programming Language One), programs are called:",
+      opts:["Words","Procedures","Functions","Methods"] },
+    { n:16, q:"The formula for Access Time is:",
+      opts:["Seek Time × Latency","Average Seek Time − Average Latency","Average Latency + Average Seek Time","Baud Rate ÷ Seek Time"] },
+    { n:17, q:"Which programming language was developed with support from the US Department of Defense for business applications?",
+      opts:["FORTRAN","BASIC","PASCAL","COBOL"] },
+    { n:18, q:"A compiler is best described as:",
+      opts:["A program that translates assembly language into machine code","A program that converts decimal to binary","A program that translates high-level language into machine code for CPU execution","A temporary storage area for instructions"] },
+    { n:19, q:"Which of the following is NOT a valid BCD (Binary Coded Decimal) code?",
+      opts:["0101","1001","0011","1011"] },
+    { n:20, q:"The Hollerith code is a standard method for coding data on cards with which dimensions?",
+      opts:["12-column, 80-row cards","80-row, 12-column cards","80-column, 12-row cards","64-column, 8-row cards"] },
+  ];
+
+  const MC_ANSWERS = ["C","B","C","C","D","C","C","B","D","C","D","B","D","C","C","C","D","C","D","C"];
+
+  /* =====================================================================
+     PART II — IDENTIFICATION  (10 items)
+  ===================================================================== */
+  const ID_QUESTIONS = [
+    "I am a five-bit character code developed by French Postal Engineer Thomas Murray. I allow a maximum of 64 characters and am widely used in Telex and teletypewriter communications.",
+    "I am a binary coding system where 3 is added to each decimal digit BEFORE it is encoded into binary. I work similarly to BCD but with this extra step.",
+    "I am a code that belongs to a class called minimum-change-codes. Only one bit in the code group changes when going from one decimal number to the next.",
+    "I am the process of detecting, locating, and correcting logic errors in a program.",
+    "I am a set of steps through which a computer does a job. Every program begins with me before actual coding.",
+    "I am an 8-bit character code widely used in mainframe computers. My full name is Extended BCD Interchange Code and I allow 256 different characters.",
+    "I am a data structure in programming where the first items inserted are the last ones removed.",
+    "I am the unit of signaling speed equal to the number of bits that can be transferred in one second.",
+    "I am a hidden table of every cluster on a floppy or hard disk. I record how files are stored in distinct — and not necessarily contiguous — clusters.",
+    "I am the core portion of an operating system that resides in memory and performs the most essential tasks such as handling disk I/O and managing internal memory.",
+  ];
+
+  const ID_KEYS = [
+    ["baudot","baudot code"],
+    ["excess 3","excess3","excess 3 code","excess3code","xs3","xs 3"],
+    ["gray code","gray"],
+    ["debugging","debug"],
+    ["algorithm"],
+    ["ebcdic","extended bcd interchange code","ebcdic code"],
+    ["stack"],
+    ["baud rate","baudrate"],
+    ["file allocation table","fat"],
+    ["kernel"],
+  ];
+
+  const ID_OFFICIAL = [
+    "Baudot Code",
+    "Excess-3 Code",
+    "Gray Code",
+    "Debugging",
+    "Algorithm",
+    "EBCDIC Code",
+    "Stack",
+    "Baud Rate",
+    "File Allocation Table (FAT)",
+    "Kernel",
+  ];
+
+  /* =====================================================================
+     PART III — ENUMERATION  (10 items)
+  ===================================================================== */
+  const ENUM_STEMS = [
+    "Enumerate the 3 types of programming languages discussed in the module.",
+    "Enumerate 4 common high-level programming languages and for each, write one brief distinguishing fact (one pair per line: Language — Fact).",
+    "Enumerate the 3 types of binary coding discussed in the module.",
+    "Enumerate the 4 number systems used in digital technology and their corresponding base (one pair per line: System — Base).",
+    "Enumerate all 6 types of alphanumeric codes discussed in the module.",
+    "Enumerate the 3 different components of Access Time (name each component and give a one-line definition).",
+    "Enumerate any 4 types of malicious programs/viruses mentioned in the glossary.",
+    "Enumerate the bit sizes and maximum characters for the following 4 codes: Baudot Code, ASCII Code, EBCDIC Code, and Card Code (one per line).",
+    "Enumerate the 2 main definitions that distinguish 'programming' from an 'algorithm' as given in the module.",
+    "Enumerate any 5 glossary terms from the module that start with the letter 'C', and give each term's definition in one sentence.",
+  ];
+
+  /* --- Enum grading helpers (item-by-item) --- */
+
+  // Item 1 — 3 types of programming languages
+  const TYPE_KEYS = [
+    ["machine language","machine"],
+    ["assembly language","assembly"],
+    ["high level","high-level","high level language","high-level language"],
+  ];
+
+  // Item 2 — 4 high-level languages (just language names accepted; fact is free text)
+  const HIGHLEVEL_NAMES = [
+    ["basic"],
+    ["pascal"],
+    ["fortran"],
+    ["cobol"],
+    ["c language","c lang"],
+    ["ada"],
+    ["algol"],
+    ["apl"],
+    ["forth"],
+    ["pli","pl i","pl1","pl/i","programming language one"],
+    ["rpg"],
+  ];
+
+  // Item 3 — 3 binary coding types
+  const BINARY_CODE_KEYS = [
+    ["bcd","binary coded decimal"],
+    ["excess 3","excess3","xs3","xs 3","excess-3"],
+    ["gray code","gray"],
+  ];
+
+  // Item 4 — 4 number systems with base (pair)
+  const NUM_SYS_PAIRS = [
+    { L:["decimal"],      R:["base 10","10","ten"] },
+    { L:["binary"],       R:["base 2","2","two"] },
+    { L:["octal"],        R:["base 8","8","eight"] },
+    { L:["hexadecimal","hex"], R:["base 16","16","sixteen"] },
+  ];
+
+  // Item 5 — 6 alphanumeric codes
+  const ALPHA_CODES = [
+    ["baudot","baudot code"],
+    ["ascii","american standard code for information interchange"],
+    ["ebcdic","extended bcd interchange code"],
+    ["card code","card"],
+    ["internal code","internal"],
+    ["hollerith","hollerith code"],
+  ];
+
+  // Item 6 — Access Time components (any 2 of 3 with some definition)
+  const ACCESS_TIME_PARTS = [
+    ["access time","access"],
+    ["average seek time","seek time","seek"],
+    ["average latency","latency","rotational delay"],
+  ];
+
+  // Item 7 — 4 virus/malicious program types
+  const VIRUS_KEYS = [
+    ["worm"],
+    ["trojan horse","trojan"],
+    ["retrovirus","retro virus"],
+    ["timebomb","time bomb"],
+  ];
+
+  // Item 8 — bit sizes (look for the name + bit value on same line)
+  const BIT_SIZE_PAIRS = [
+    { name:["baudot"], bit:["5","five"] },
+    { name:["ascii"],  bit:["7","seven"] },
+    { name:["ebcdic"], bit:["8","eight"] },
+    { name:["card"],   bit:["12","twelve"] },
+  ];
+
+  // Item 9 — programming vs algorithm (2 definitions)
+  const PROG_ALGO_KEYS = [
+    ["programming","preparing sequences","sequences of instructions","control","computer"],
+    ["algorithm","set of steps","steps through which","computer does a job"],
+  ];
+
+  // Item 10 — 5 C-terms (just need 5 valid C glossary terms mentioned)
+  const C_TERMS = [
+    ["cache","cache memory"],
+    ["cold boot"],
+    ["command"],
+    ["compiler"],
+    ["cmos","complementary metal"],
+    ["console"],
+    ["control unit"],
+    ["cross software"],
+    ["cursor"],
+  ];
+
+  /* =====================================================================
+     ENUM OFFICIAL ANSWERS (for results table)
+  ===================================================================== */
+  const ENUM_OFFICIAL = [
+    "Machine Language; Assembly Language; High Level Language",
+    "Any 4 of: BASIC, PASCAL, FORTRAN, COBOL, C, ADA, ALGOL, APL, FORTH, PL/I, RPG — each with a brief fact",
+    "BCD (Binary Coded Decimal); Excess-3 Code; Gray Code",
+    "Decimal–Base 10; Binary–Base 2; Octal–Base 8; Hexadecimal–Base 16",
+    "Baudot Code; ASCII Code; EBCDIC Code; Card Code; Internal Code; Hollerith Code",
+    "Access Time = Avg Latency + Avg Seek Time; Seek Time = time to move head to track; Latency = time for sector to spin under head",
+    "Worm; Trojan Horse; Retrovirus; Timebomb",
+    "Baudot–5 bits–64 chars; ASCII–7 bits–128 chars; EBCDIC–8 bits–256 chars; Card–12 bits",
+    "Programming = preparing sequences of instructions to control a computer; Algorithm = a set of steps through which a computer does a job",
+    "Any 5 of: cache, cache memory, cold boot, command, compiler, CMOS, console, control unit, cross software, cursor — each with a definition",
+  ];
+
+  const ENUM_KEY_DETAIL = [
+    { title:"1. Three types of programming languages",
+      lines:["Machine Language — binary instruction codes executed directly by the CPU",
+             "Assembly Language — instructions in mnemonic form",
+             "High Level Language — English-like, less hardware-dependent"] },
+    { title:"2. Four common high-level languages (any 4 with a fact)",
+      lines:["BASIC — developed 1964 at Dartmouth University",
+             "PASCAL — incorporates concepts of ALGOL",
+             "FORTRAN — developed 1957 by IBM for scientific/engineering",
+             "COBOL — fostered by the US Department of Defense",
+             "C — developed at Bell Labs for UNIX",
+             "(Also valid: ADA, ALGOL, APL, FORTH, PL/I, RPG)"] },
+    { title:"3. Three types of binary coding",
+      lines:["BCD (Binary Coded Decimal)","Excess-3 Code","Gray Code"] },
+    { title:"4. Four number systems and bases",
+      lines:["Decimal — Base 10","Binary — Base 2","Octal — Base 8","Hexadecimal — Base 16"] },
+    { title:"5. Six alphanumeric codes",
+      lines:["Baudot Code","ASCII Code","EBCDIC Code","Card Code","Internal Code","Hollerith Code"] },
+    { title:"6. Access Time components",
+      lines:["Access Time = Average Latency + Average Seek Time",
+             "Average Seek Time — average time to move head from one location to a new location",
+             "Average Latency (Rotational Delay) — time for a disk to spin a sector under the head"] },
+    { title:"7. Four malicious program types",
+      lines:["Worm — finds and alters all data in memory/disk",
+             "Trojan Horse — appears valid but causes hidden damage",
+             "Retrovirus — defeats or deletes antivirus software",
+             "Timebomb — waits for a specific date/time to activate"] },
+    { title:"8. Bit sizes of four codes",
+      lines:["Baudot Code — 5 bits — 64 characters",
+             "ASCII Code — 7 bits — 128 characters",
+             "EBCDIC Code — 8 bits — 256 characters",
+             "Card Code — 12 bits"] },
+    { title:"9. Programming vs Algorithm",
+      lines:["Programming — the process of preparing sequences of instructions for control of a computer's operation",
+             "Algorithm — a set of steps through which a computer does a job"] },
+    { title:"10. Any 5 glossary terms starting with 'C'",
+      lines:["cache — stores frequently accessed data for quick retrieval",
+             "cache memory — high-speed buffer between CPU and main memory",
+             "cold boot — starting the computer by turning the power switch",
+             "command — an instruction for program I/O editing or control",
+             "compiler — translates high-level language into machine code",
+             "CMOS — energy-saving chip duplicating functions of other chips",
+             "console — a terminal consisting of monitor and keyboard",
+             "control unit — part of the ALU that directs processing",
+             "cross software — programs used to generate code for other machines",
+             "cursor — indicator on screen showing next interaction point"] },
+  ];
+
+  /* =====================================================================
+     UTILITY
+  ===================================================================== */
+  const LETTERS = ["A","B","C","D"];
+
+  function normalize(s) {
+    return String(s||"")
+      .toLowerCase()
+      .replace(/['']/g,"'")
+      .replace(/\//g," ")
+      .replace(/-/g," ")
+      .replace(/[()[\]]/g,"")
+      .replace(/\s+/g," ")
+      .replace(/[.,;:]/g,"")
+      .trim();
+  }
+
+  function idMatches(input, acceptedList) {
+    const n = normalize(input);
+    if (!n) return false;
+    return acceptedList.some(function(acc) {
+      const a = normalize(acc);
+      if (n === a) return true;
+      if (a.length >= 4 && (n.includes(a) || a.includes(n))) return true;
+      return false;
+    });
+  }
+
+  function parseEnumLines(raw) {
+    return String(raw||"")
+      .split(/\r?\n/)
+      .map(function(line){
+        return normalize(line.replace(/^\s*\d+[\.\)]\s*/,"").replace(/^[-*•]\s*/,""));
+      })
+      .filter(Boolean);
+  }
+
+  function tokenMatch(lineNorm, phrase) {
+    const p = normalize(phrase);
+    if (!p || !lineNorm) return false;
+    if (lineNorm === p) return true;
+    if (p.length >= 3 && lineNorm.includes(p)) return true;
+    return false;
+  }
+
+  function lineMatchAny(lineNorm, alts) {
+    return alts.some(function(a){ return tokenMatch(lineNorm, a); });
+  }
+
+  function setCorrect(userLines, keysPerItem) {
+    if (userLines.length < keysPerItem.length) return false;
+    const used = {};
+    for (let e=0; e<keysPerItem.length; e++) {
+      let found = false;
+      for (let u=0; u<userLines.length; u++) {
+        if (used[u]) continue;
+        if (lineMatchAny(userLines[u], keysPerItem[e])) {
+          used[u] = true; found = true; break;
+        }
+      }
+      if (!found) return false;
+    }
+    return true;
+  }
+
+  function pairRowOk(lineNorm, row) {
+    const L = row.L.some(function(a){ return tokenMatch(lineNorm, a); });
+    const R = row.R.some(function(a){ return tokenMatch(lineNorm, a); });
+    return L && R;
+  }
+
+  function pairsSetCorrect(userLines, pairDefs) {
+    if (userLines.length < pairDefs.length) return false;
+    const used = {};
+    for (let p=0; p<pairDefs.length; p++) {
+      let found = false;
+      for (let u=0; u<userLines.length; u++) {
+        if (used[u]) continue;
+        if (pairRowOk(userLines[u], pairDefs[p])) { used[u]=true; found=true; break; }
+      }
+      if (!found) return false;
+    }
+    return true;
+  }
+
+  function bitPairOk(lineNorm, pair) {
+    const nameOk = pair.name.some(function(n){ return tokenMatch(lineNorm,n); });
+    const bitOk  = pair.bit.some(function(b){ return tokenMatch(lineNorm,b); });
+    return nameOk && bitOk;
+  }
+
+  function nOf(userLines, keyGroups, n) {
+    // at least n distinct groups hit
+    let hit = 0;
+    const used = {};
+    for (let g=0; g<keyGroups.length; g++) {
+      for (let u=0; u<userLines.length; u++) {
+        if (used[u]) continue;
+        if (lineMatchAny(userLines[u], keyGroups[g])) { used[u]=true; hit++; break; }
+      }
+    }
+    return hit >= n;
+  }
+
+  /* =====================================================================
+     ENUM GRADING
+  ===================================================================== */
+  function enumItemCorrect(idx, raw) {
+    const uLines = parseEnumLines(raw);
+    if (uLines.length === 0) return false;
+
+    switch(idx) {
+      case 0: // 3 types of programming languages
+        return setCorrect(uLines, TYPE_KEYS);
+
+      case 1: // 4 high-level language names (any 4)
+        return nOf(uLines, HIGHLEVEL_NAMES, 4);
+
+      case 2: // 3 binary coding types
+        return setCorrect(uLines, BINARY_CODE_KEYS);
+
+      case 3: // 4 number system–base pairs
+        return pairsSetCorrect(uLines, NUM_SYS_PAIRS);
+
+      case 4: // 6 alphanumeric codes
+        return setCorrect(uLines, ALPHA_CODES);
+
+      case 5: // Access Time components (any 2 of 3 named)
+        return nOf(uLines, ACCESS_TIME_PARTS, 2);
+
+      case 6: // 4 virus types
+        return setCorrect(uLines, VIRUS_KEYS);
+
+      case 7: // bit-size pairs (all 4)
+        if (uLines.length < 4) return false;
+        return BIT_SIZE_PAIRS.every(function(pair){
+          return uLines.some(function(ln){ return bitPairOk(ln, pair); });
+        });
+
+      case 8: // programming + algorithm definitions (2 lines, each containing key terms)
+        if (uLines.length < 2) return false;
+        const progOk  = uLines.some(function(ln){ return lineMatchAny(ln, PROG_ALGO_KEYS[0]); });
+        const algoOk  = uLines.some(function(ln){ return lineMatchAny(ln, PROG_ALGO_KEYS[1]); });
+        return progOk && algoOk;
+
+      case 9: // any 5 C-terms mentioned
+        return nOf(uLines, C_TERMS, 5);
+
+      default: return false;
+    }
+  }
+
+  /* =====================================================================
+     LIVE GLOW HELPERS
+  ===================================================================== */
+  function applyMcGlow(qnum) {
+    const idx = MC_QUESTIONS.findIndex(function(q){ return q.n === qnum; });
+    if (idx < 0) return;
+    const block = document.querySelector('.mc-item[data-q="'+qnum+'"]');
+    if (!block) return;
+    block.classList.remove("answer-correct","answer-incorrect");
+    const sel = document.querySelector('input[name="mc_'+qnum+'"]:checked');
+    if (!sel) return;
+    block.classList.add(sel.value === MC_ANSWERS[idx] ? "answer-correct" : "answer-incorrect");
+  }
+
+  function applyIdGlow(num) {
+    const idx = num - 1;
+    const block = document.querySelector('.id-item[data-id="'+num+'"]');
+    const input = document.getElementById("id_"+num);
+    if (!block || !input) return;
+    block.classList.remove("answer-correct","answer-incorrect");
+    if (!String(input.value).trim()) return;
+    block.classList.add(idMatches(input.value, ID_KEYS[idx]) ? "answer-correct" : "answer-incorrect");
+  }
+
+  function applyEnumGlow(num) {
+    const idx = num - 1;
+    const block = document.querySelector('.enum-item[data-enum="'+num+'"]');
+    const ta    = document.getElementById("enum_"+num);
+    if (!block || !ta) return;
+    block.classList.remove("answer-correct","answer-incorrect");
+    if (!String(ta.value).trim()) return;
+    block.classList.add(enumItemCorrect(idx, ta.value) ? "answer-correct" : "answer-incorrect");
+  }
+
+  function clearGlows() {
+    document.querySelectorAll(".mc-item,.id-item,.enum-item").forEach(function(el){
+      el.classList.remove("answer-correct","answer-incorrect");
+    });
+  }
+
+  /* =====================================================================
+     RENDER
+  ===================================================================== */
+  function renderMC() {
+    const container = document.getElementById("mc-container");
+    const frag = document.createDocumentFragment();
+    MC_QUESTIONS.forEach(function(item) {
+      const wrap = document.createElement("div");
+      wrap.className = "mc-item";
+      wrap.setAttribute("data-q", String(item.n));
+      const stem = document.createElement("p");
+      stem.className = "mc-stem";
+      stem.textContent = item.n + ". " + item.q;
+      const opts = document.createElement("div");
+      opts.className = "mc-options";
+      item.opts.forEach(function(text, oi) {
+        const lab   = document.createElement("label");
+        const radio = document.createElement("input");
+        radio.type  = "radio";
+        radio.name  = "mc_" + item.n;
+        radio.value = LETTERS[oi];
+        const span  = document.createElement("span");
+        span.textContent = LETTERS[oi] + ") " + text;
+        radio.addEventListener("change", function(){ applyMcGlow(item.n); });
+        lab.appendChild(radio);
+        lab.appendChild(span);
+        opts.appendChild(lab);
+      });
+      wrap.appendChild(stem);
+      wrap.appendChild(opts);
+      frag.appendChild(wrap);
+    });
+    container.appendChild(frag);
+  }
+
+  function renderID() {
+    const container = document.getElementById("id-container");
+    const frag = document.createDocumentFragment();
+    ID_QUESTIONS.forEach(function(text, i) {
+      const num  = i + 1;
+      const wrap = document.createElement("div");
+      wrap.className = "id-item";
+      wrap.setAttribute("data-id", String(num));
+      const lab  = document.createElement("label");
+      lab.setAttribute("for","id_"+num);
+      lab.textContent = num + ". " + text;
+      const input = document.createElement("input");
+      input.type  = "text";
+      input.name  = "id_" + num;
+      input.id    = "id_" + num;
+      input.setAttribute("autocomplete","off");
+      input.addEventListener("input", function(){ applyIdGlow(num); });
+      wrap.appendChild(lab);
+      wrap.appendChild(input);
+      frag.appendChild(wrap);
+    });
+    container.appendChild(frag);
+  }
+
+  function renderEnum() {
+    const container = document.getElementById("enum-container");
+    if (!container) return;
+    const frag = document.createDocumentFragment();
+    ENUM_STEMS.forEach(function(stem, i) {
+      const num  = i + 1;
+      const wrap = document.createElement("div");
+      wrap.className = "enum-item";
+      wrap.setAttribute("data-enum", String(num));
+      const lab  = document.createElement("label");
+      lab.setAttribute("for","enum_"+num);
+      lab.textContent = num + ". " + stem;
+      const ta   = document.createElement("textarea");
+      ta.id   = "enum_" + num;
+      ta.name = "enum_" + num;
+      ta.setAttribute("rows","5");
+      ta.setAttribute("autocomplete","off");
+      ta.addEventListener("input", function(){ applyEnumGlow(num); });
+      wrap.appendChild(lab);
+      wrap.appendChild(ta);
+      frag.appendChild(wrap);
+    });
+    container.appendChild(frag);
+  }
+
+  function renderAnswerKey() {
+    const el = document.getElementById("answer-key-content");
+
+    const mcTitle = document.createElement("p");
+    mcTitle.innerHTML = "<strong>Part I — Multiple Choice</strong>";
+    const mcGrid  = document.createElement("div");
+    mcGrid.className = "key-grid";
+    MC_ANSWERS.forEach(function(ans, i) {
+      const d = document.createElement("div");
+      d.textContent = (i+1) + ". " + ans;
+      mcGrid.appendChild(d);
+    });
+
+    const idTitle = document.createElement("p");
+    idTitle.innerHTML = "<strong>Part II — Identification</strong>";
+    idTitle.style.marginTop = "1rem";
+    const idGrid  = document.createElement("div");
+    idGrid.className = "key-grid";
+    ID_OFFICIAL.forEach(function(ans, i) {
+      const d = document.createElement("div");
+      d.textContent = (i+1) + ". " + ans;
+      idGrid.appendChild(d);
+    });
+
+    const enTitle = document.createElement("p");
+    enTitle.innerHTML = "<strong>Part III — Enumeration</strong>";
+    enTitle.style.marginTop = "1rem";
+    const enWrap  = document.createElement("div");
+    ENUM_KEY_DETAIL.forEach(function(block) {
+      const sec  = document.createElement("div");
+      sec.style.marginTop = "0.85rem";
+      const ht   = document.createElement("p");
+      ht.style.margin = "0 0 0.35rem";
+      ht.style.fontWeight = "600";
+      ht.textContent = block.title;
+      sec.appendChild(ht);
+      const ul   = document.createElement("ul");
+      ul.style.margin = "0";
+      ul.style.paddingLeft = "1.25rem";
+      block.lines.forEach(function(ln) {
+        const li = document.createElement("li");
+        li.textContent = ln;
+        ul.appendChild(li);
+      });
+      sec.appendChild(ul);
+      enWrap.appendChild(sec);
+    });
+
+    el.innerHTML = "";
+    el.appendChild(mcTitle);
+    el.appendChild(mcGrid);
+    el.appendChild(idTitle);
+    el.appendChild(idGrid);
+    el.appendChild(enTitle);
+    el.appendChild(enWrap);
+  }
+
+  /* =====================================================================
+     GRADING
+  ===================================================================== */
+  function escapeHtml(t) {
+    const div = document.createElement("div");
+    div.textContent = t;
+    return div.innerHTML;
+  }
+
+  function grade() {
+    clearGlows();
+
+    let mcCorrect = 0;
+    const mcRows  = [];
+    MC_QUESTIONS.forEach(function(item, i) {
+      const sel  = document.querySelector('input[name="mc_'+item.n+'"]:checked');
+      const user = sel ? sel.value : "—";
+      const key  = MC_ANSWERS[i];
+      const ok   = user === key;
+      if (ok) mcCorrect++;
+      mcRows.push({ num:item.n, user:user, correct:key, ok:ok });
+    });
+
+    let idCorrect = 0;
+    const idRows  = [];
+    for (let i=0; i<ID_QUESTIONS.length; i++) {
+      const input = document.getElementById("id_"+(i+1));
+      const raw   = input ? input.value : "";
+      const ok    = idMatches(raw, ID_KEYS[i]);
+      if (ok) idCorrect++;
+      idRows.push({ num:i+1, user:raw.trim()||"—", ok:ok, official:ID_OFFICIAL[i] });
+    }
+
+    let enumCorrect = 0;
+    const enumRows  = [];
+    for (let i=0; i<ENUM_STEMS.length; i++) {
+      const ta  = document.getElementById("enum_"+(i+1));
+      const raw = ta ? ta.value : "";
+      const ok  = enumItemCorrect(i, raw);
+      if (ok) enumCorrect++;
+      enumRows.push({ num:i+1, user:raw.trim()||"—", ok:ok, official:ENUM_OFFICIAL[i] });
+    }
+
+    const totalMC   = MC_QUESTIONS.length;
+    const totalID   = ID_QUESTIONS.length;
+    const totalEnum = ENUM_STEMS.length;
+    const total     = totalMC + totalID + totalEnum;
+    const score     = mcCorrect + idCorrect + enumCorrect;
+
+    document.getElementById("results-summary").textContent =
+      "Score: " + score + " / " + total +
+      "  (Part I: " + mcCorrect + "/" + totalMC +
+      ";  Part II: " + idCorrect + "/" + totalID +
+      ";  Part III: " + enumCorrect + "/" + totalEnum + ")";
+
+    const detail = document.getElementById("results-detail");
+    let html = "<h3>Part I — Multiple Choice</h3><table><thead><tr><th>#</th><th>Your Answer</th><th>Key</th></tr></thead><tbody>";
+    mcRows.forEach(function(r) {
+      html += "<tr class='"+(r.ok?"correct":"incorrect")+"'><td>"+r.num+"</td><td>"+r.user+"</td><td>"+r.correct+"</td></tr>";
+    });
+    html += "</tbody></table>";
+
+    html += "<h3>Part II — Identification</h3><table><thead><tr><th>#</th><th>Your Answer</th><th>Status</th></tr></thead><tbody>";
+    idRows.forEach(function(r) {
+      html += "<tr class='"+(r.ok?"correct":"incorrect")+"'><td>"+r.num+"</td><td>"+escapeHtml(r.user)+"</td><td>"+(r.ok?"✓ Correct":"✗ Key: "+escapeHtml(r.official))+"</td></tr>";
+    });
+    html += "</tbody></table>";
+
+    html += "<h3>Part III — Enumeration</h3><table><thead><tr><th>#</th><th>Your Answer</th><th>Key (summary)</th></tr></thead><tbody>";
+    enumRows.forEach(function(r) {
+      const u = r.user.length > 200 ? r.user.slice(0,200)+"…" : r.user;
+      html += "<tr class='"+(r.ok?"correct":"incorrect")+"'><td>"+r.num+"</td><td>"+escapeHtml(u)+"</td><td>"+escapeHtml(r.official)+"</td></tr>";
+    });
+    html += "</tbody></table>";
+    detail.innerHTML = html;
+
+    // Apply glows after grading
+    mcRows.forEach(function(r) {
+      const b = document.querySelector('.mc-item[data-q="'+r.num+'"]');
+      if (b) b.classList.add(r.ok?"answer-correct":"answer-incorrect");
+    });
+    idRows.forEach(function(r) {
+      const b = document.querySelector('.id-item[data-id="'+r.num+'"]');
+      if (b) b.classList.add(r.ok?"answer-correct":"answer-incorrect");
+    });
+    enumRows.forEach(function(r) {
+      const b = document.querySelector('.enum-item[data-enum="'+r.num+'"]');
+      if (b) b.classList.add(r.ok?"answer-correct":"answer-incorrect");
+    });
+
+    const panel = document.getElementById("results-panel");
+    panel.classList.remove("hidden");
+    panel.scrollIntoView({ behavior:"smooth", block:"start" });
+  }
+
+  /* =====================================================================
+     DOWNLOAD
+  ===================================================================== */
+  function downloadExam() {
+    const blob = new Blob([document.documentElement.outerHTML], { type:"text/html;charset=utf-8" });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    a.href     = url;
+    a.download = "exam-week15-16-programming-languages.html";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  /* =====================================================================
+     INIT
+  ===================================================================== */
+  function init() {
+    renderMC();
+    renderID();
+    renderEnum();
+    renderAnswerKey();
+
+    const today = new Date().toISOString().slice(0,10);
+    const dateInput = document.getElementById("exam_date");
+    if (dateInput) dateInput.value = today;
+
+    document.getElementById("exam-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      grade();
+    });
+
+    document.getElementById("btn-reset").addEventListener("click", function() {
+      if (!confirm("Clear all answers? This cannot be undone.")) return;
+      clearGlows();
+      document.getElementById("exam-form").reset();
+      document.getElementById("results-panel").classList.add("hidden");
+      if (dateInput) dateInput.value = today;
+    });
+
+    document.getElementById("btn-download").addEventListener("click", downloadExam);
+
+    document.getElementById("btn-print").addEventListener("click", function() {
+      window.print();
+    });
+
+    document.getElementById("btn-toggle-key").addEventListener("click", function() {
+      const key    = document.getElementById("answer-key-content");
+      const hidden = key.classList.toggle("hidden");
+      this.textContent = hidden ? "Show Answer Key" : "Hide Answer Key";
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e3a5f" />
+  <title>CS 160 — Input/Output Systems Exam</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+    :root {
+      --ink: #1a1a1a;
+      --muted: #4a4a4a;
+      --border: #2c3e50;
+      --accent: #1e3a5f;
+      --accent2: #8b1538;
+      --paper: #faf9f7;
+      --rule: #c9c4bc;
+      --success: #1b5e20;
+      --error: #8b1538;
+      --glow-green: rgba(46,125,50,0.55);
+      --glow-red: rgba(198,40,40,0.55);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Source Serif 4', 'Georgia', 'Times New Roman', serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    .exam-header {
+      background: var(--accent);
+      color: #fff;
+      padding: 2.25rem clamp(1rem, 5vw, 2rem) 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .exam-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(255,255,255,0.025) 40px,
+        rgba(255,255,255,0.025) 80px
+      );
+      pointer-events: none;
+    }
+    .header-inner {
+      max-width: 50rem;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .header-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.9);
+      padding: 0.3rem 0.85rem;
+      border-radius: 2px;
+      margin-bottom: 0.85rem;
+    }
+    .exam-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.5rem, 5vw, 2.4rem);
+      font-weight: 900;
+      margin: 0 0 0.5rem;
+      line-height: 1.15;
+      color: #fff;
+    }
+    .exam-title span { color: #f0c040; }
+    .subtitle {
+      font-size: clamp(0.85rem, 2.5vw, 0.97rem);
+      color: rgba(255,255,255,0.7);
+      font-style: italic;
+      margin: 0;
+    }
+    .instructions-lead {
+      margin: 1rem auto 0;
+      font-size: clamp(0.82rem, 2.4vw, 0.9rem);
+      color: rgba(255,255,255,0.65);
+      max-width: 38rem;
+      line-height: 1.45;
+    }
+
+    /* ── MAIN ── */
+    .exam-main {
+      max-width: 50rem;
+      margin: 0 auto;
+      padding: 2rem clamp(1rem, 4vw, 1.75rem) 4rem;
+      width: 100%;
+    }
+
+    /* ── STUDENT BLOCK ── */
+    .student-block {
+      margin-bottom: 2.25rem;
+      padding: 1.35rem 1.5rem 1.5rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-top: 4px solid var(--accent);
+      border-radius: 2px;
+    }
+    .section-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin: 0 0 1rem;
+      font-weight: 700;
+    }
+    .student-grid {
+      display: grid;
+      gap: 0.85rem;
+    }
+    @media (min-width: 36rem) {
+      .student-grid { grid-template-columns: 1fr 1fr; }
+      .student-grid .field:first-child { grid-column: 1 / -1; }
+    }
+    .field { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.95rem; }
+    .field span { font-weight: 600; font-size: 0.88rem; color: var(--muted); }
+    .field input {
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.5rem 0.65rem;
+      border: 1px solid var(--rule);
+      border-bottom: 2px solid var(--accent);
+      border-radius: 2px;
+      background: #fefefe;
+    }
+    .field input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+    /* ── PARTS ── */
+    .exam-part { margin-bottom: 2.75rem; }
+
+    .part-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
+    }
+    .part-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent2);
+    }
+    .part-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1;
+    }
+    .part-direction {
+      margin: 0.45rem 0 1.35rem;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .questions { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    /* ── MC ITEMS ── */
+    .mc-item, .id-item, .enum-item {
+      padding: 1rem 1rem 1rem 1.1rem;
+      border-left: 3px solid var(--rule);
+      background: #fff;
+      border-radius: 0 3px 3px 0;
+      transition: box-shadow 0.15s ease, border-left-color 0.15s ease, background-color 0.15s ease;
+    }
+    .mc-stem {
+      margin: 0 0 0.7rem;
+      font-weight: 600;
+      line-height: 1.45;
+      overflow-wrap: break-word;
+    }
+    .mc-options { display: flex; flex-direction: column; gap: 0.3rem; }
+    .mc-options label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      font-size: clamp(0.88rem, 2.6vw, 0.97rem);
+      padding: 0.45rem 0.3rem;
+      border-radius: 3px;
+      min-height: 2.6rem;
+      touch-action: manipulation;
+    }
+    .mc-options label:hover { background: rgba(30,58,95,0.05); }
+    .mc-options input {
+      margin-top: 0.22rem;
+      flex-shrink: 0;
+      width: 1.1rem;
+      height: 1.1rem;
+      accent-color: var(--accent);
+    }
+    .mc-options span { overflow-wrap: break-word; min-width: 0; }
+
+    /* ── ID ITEMS ── */
+    .identification .id-item label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+      line-height: 1.45;
+      overflow-wrap: break-word;
+    }
+    .identification .id-item input[type="text"] {
+      width: 100%;
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.5rem 0.65rem;
+      min-height: 2.6rem;
+      border: 1px solid var(--rule);
+      border-bottom: 2px solid var(--accent);
+      border-radius: 2px;
+      background: #fefefe;
+    }
+    .identification .id-item input:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+
+    /* ── ENUM ITEMS ── */
+    .enumeration-inputs .enum-item label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      line-height: 1.45;
+      overflow-wrap: break-word;
+    }
+    .enumeration-inputs .enum-item textarea {
+      width: 100%;
+      min-height: 7rem;
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid var(--rule);
+      border-bottom: 2px solid var(--accent);
+      border-radius: 2px;
+      background: #fefefe;
+      resize: vertical;
+      line-height: 1.55;
+    }
+    .enumeration-inputs .enum-item textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+
+    /* ── FEEDBACK GLOWS ── */
+    .mc-item.answer-correct, .id-item.answer-correct, .enum-item.answer-correct {
+      border-left-color: #2e7d32;
+      background-color: rgba(46,125,50,0.06);
+      box-shadow: 0 0 0 1px rgba(46,125,50,0.35), 0 0 20px 4px var(--glow-green), 0 0 40px 8px rgba(46,125,50,0.15);
+      animation: glow-green-pulse 2s ease-in-out infinite;
+    }
+    .mc-item.answer-incorrect, .id-item.answer-incorrect, .enum-item.answer-incorrect {
+      border-left-color: #c62828;
+      background-color: rgba(198,40,40,0.06);
+      box-shadow: 0 0 0 1px rgba(198,40,40,0.4), 0 0 20px 4px var(--glow-red), 0 0 40px 8px rgba(198,40,40,0.18);
+      animation: glow-red-pulse 2s ease-in-out infinite;
+    }
+    @keyframes glow-green-pulse {
+      0%,100% { box-shadow: 0 0 0 1px rgba(46,125,50,0.35), 0 0 16px 3px var(--glow-green), 0 0 32px 6px rgba(46,125,50,0.12); }
+      50% { box-shadow: 0 0 0 1px rgba(46,125,50,0.45), 0 0 24px 6px rgba(46,125,50,0.65), 0 0 48px 10px rgba(46,125,50,0.2); }
+    }
+    @keyframes glow-red-pulse {
+      0%,100% { box-shadow: 0 0 0 1px rgba(198,40,40,0.4), 0 0 16px 3px var(--glow-red), 0 0 32px 6px rgba(198,40,40,0.14); }
+      50% { box-shadow: 0 0 0 1px rgba(198,40,40,0.5), 0 0 24px 6px rgba(198,40,40,0.7), 0 0 48px 10px rgba(198,40,40,0.22); }
+    }
+
+    /* ── ACTIONS ── */
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin: 2.25rem 0 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+    }
+    .btn {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      padding: 0.65rem 1.25rem;
+      min-height: 2.75rem;
+      border-radius: 3px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      touch-action: manipulation;
+      letter-spacing: 0.02em;
+      transition: background 0.18s, color 0.18s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+    .btn-primary:hover { background: #152d49; }
+    .btn-secondary { background: #fff; color: var(--ink); }
+    .btn-secondary:hover { background: #f0eeeb; }
+    .btn-outline { background: transparent; color: var(--accent); border-color: var(--accent); }
+    .btn-outline:hover { background: rgba(30,58,95,0.07); }
+    .btn-danger { background: transparent; color: var(--accent2); border-color: var(--accent2); }
+    .btn-danger:hover { background: rgba(139,21,56,0.07); }
+
+    /* ── RESULTS ── */
+    .results-panel {
+      margin-top: 1.75rem;
+      padding: 1.35rem 1.5rem 1.75rem;
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--accent);
+      background: #fff;
+    }
+    .results-panel.hidden { display: none; }
+    .results-summary { font-size: 1.05rem; margin: 0 0 1.1rem; font-weight: 600; }
+    .score-bar-wrap { height: 10px; background: #e0ddd8; border-radius: 99px; overflow: hidden; margin-bottom: 1.25rem; }
+    .score-bar { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #1e3a5f, #3a6ea8); transition: width 0.8s ease; }
+    .results-detail { font-size: 0.9rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .results-detail h3 { font-size: 0.93rem; margin: 1.25rem 0 0.5rem; font-weight: 600; }
+    .results-detail h3:first-child { margin-top: 0; }
+    .results-detail table { width: 100%; min-width: 15rem; border-collapse: collapse; margin-top: 0.5rem; }
+    .results-detail th, .results-detail td { text-align: left; padding: 0.4rem 0.5rem; border: 1px solid var(--rule); overflow-wrap: anywhere; word-break: break-word; }
+    .results-detail th { background: #eef1f4; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .correct { color: var(--success); font-weight: 600; }
+    .incorrect { color: var(--error); }
+
+    /* ── ANSWER KEY ── */
+    .answer-key-section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 2px solid var(--rule); }
+    .key-note { font-size: 0.88rem; color: var(--muted); margin: 0 0 1rem; font-style: italic; }
+    .answer-key-content { margin-top: 1rem; padding: 1.1rem; background: #fff; border: 1px solid var(--rule); font-size: 0.88rem; }
+    .answer-key-content.hidden { display: none; }
+    .key-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%,8rem),1fr)); gap: 0.35rem 0.75rem; }
+    .key-grid div { padding: 0.2rem 0; border-bottom: 1px dotted var(--rule); }
+    .key-section-title { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin: 1rem 0 0.5rem; }
+
+    /* ── ENUM SECTION HEADER ── */
+    .enum-section-note {
+      background: rgba(30,58,95,0.06);
+      border-left: 3px solid var(--accent);
+      padding: 0.65rem 1rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+
+    /* ── FOOTER ── */
+    .exam-footer {
+      text-align: center;
+      padding: 1.35rem clamp(1rem, 4vw, 2rem);
+      font-size: clamp(0.75rem, 2.3vw, 0.82rem);
+      color: var(--muted);
+      border-top: 1px solid var(--rule);
+      background: #fff;
+      line-height: 1.65;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 36rem) {
+      .part-title { font-size: 1.05rem; }
+      .mc-item, .id-item, .enum-item { padding-left: 0.75rem; padding-right: 0; }
+      .enumeration-inputs .enum-item textarea { font-size: 16px; }
+      .identification .id-item input[type="text"], .field input { font-size: 16px; }
+      .actions { flex-direction: column; align-items: stretch; }
+      .actions .btn { width: 100%; }
+      .mc-item.answer-correct, .id-item.answer-correct, .enum-item.answer-correct { animation: none; box-shadow: 0 0 0 1px rgba(46,125,50,0.35), 0 0 14px 3px var(--glow-green); }
+      .mc-item.answer-incorrect, .id-item.answer-incorrect, .enum-item.answer-incorrect { animation: none; box-shadow: 0 0 0 1px rgba(198,40,40,0.4), 0 0 14px 3px var(--glow-red); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mc-item.answer-correct, .id-item.answer-correct, .enum-item.answer-correct,
+      .mc-item.answer-incorrect, .id-item.answer-incorrect, .enum-item.answer-incorrect { animation: none; }
+      .score-bar { transition: none; }
+    }
+
+    @media print {
+      .actions, #btn-toggle-key { display: none !important; }
+      body { background: #fff; }
+      .mc-item.answer-correct, .id-item.answer-correct, .enum-item.answer-correct { animation: none; box-shadow: none; border-left: 4px solid #2e7d32; background: rgba(46,125,50,0.08); }
+      .mc-item.answer-incorrect, .id-item.answer-incorrect, .enum-item.answer-incorrect { animation: none; box-shadow: none; border-left: 4px solid #c62828; background: rgba(198,40,40,0.08); }
+      .exam-header { background: #1e3a5f !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="exam-header">
+  <div class="header-inner">
+    <div class="header-badge">CS 160 — Computer Organization</div>
+    <h1 class="exam-title">Input/<span>Output</span> Systems</h1>
+    <p class="subtitle">Weeks 15–16 — Practice Examination</p>
+    <p class="instructions-lead">Part I: 20 Multiple Choice &nbsp;·&nbsp; Part II: 10 Identification &nbsp;·&nbsp; Part III: 10 Enumeration. <strong style="color:#f0c040;">⚡ Live feedback:</strong> questions glow green or red the instant you answer.</p>
+  </div>
+</header>
+
+<main class="exam-main">
+
+  <section class="student-block" aria-labelledby="student-info-heading">
+    <h2 id="student-info-heading" class="section-label">Examinee Information</h2>
+    <div class="student-grid">
+      <label class="field">
+        <span>Name:</span>
+        <input type="text" name="student_name" id="student_name" autocomplete="name" />
+      </label>
+      <label class="field">
+        <span>Section / Student No.:</span>
+        <input type="text" name="student_id" id="student_id" autocomplete="off" />
+      </label>
+      <label class="field">
+        <span>Date:</span>
+        <input type="date" name="exam_date" id="exam_date" />
+      </label>
+    </div>
+  </section>
+
+  <form id="exam-form" novalidate>
+
+    <!-- PART I -->
+    <section class="exam-part" aria-labelledby="part1-heading">
+      <div class="part-header">
+        <span class="part-number">Part I</span>
+        <h2 id="part1-heading" class="part-title">Multiple Choice</h2>
+      </div>
+      <p class="part-direction">Choose the letter of the best answer. (1 point each)</p>
+      <div id="mc-container" class="questions"></div>
+    </section>
+
+    <!-- PART II -->
+    <section class="exam-part" aria-labelledby="part2-heading">
+      <div class="part-header">
+        <span class="part-number">Part II</span>
+        <h2 id="part2-heading" class="part-title">Identification</h2>
+      </div>
+      <p class="part-direction">Identify the correct term or concept being described. Write your answer clearly in the space provided. (2 points each)</p>
+      <div id="id-container" class="questions identification"></div>
+    </section>
+
+    <!-- PART III -->
+    <section class="exam-part" aria-labelledby="part3-heading">
+      <div class="part-header">
+        <span class="part-number">Part III</span>
+        <h2 id="part3-heading" class="part-title">Enumeration</h2>
+      </div>
+      <p class="part-direction">List all required items completely and correctly. Write one item per line inside the text area. (1 point per correct item)</p>
+      <div class="enum-section-note">
+        <strong>Tip:</strong> Write one answer per line. For items asking for pairs (e.g. category — example), separate each pair with a dash or comma on the same line.
+      </div>
+      <div id="enum-container" class="questions enumeration-inputs"></div>
+    </section>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary">✔ Submit Examination</button>
+      <button type="button" class="btn btn-danger" id="btn-reset">✕ Clear All Responses</button>
+      <button type="button" class="btn btn-outline" id="btn-print">⎙ Print / Save as PDF</button>
+    </div>
+  </form>
+
+  <!-- RESULTS -->
+  <section id="results-panel" class="results-panel hidden" aria-live="polite">
+    <h2 class="part-title" style="margin:0 0 0.75rem;border-bottom:1px solid var(--rule);padding-bottom:0.4rem;">Examination Results</h2>
+    <p id="results-summary" class="results-summary"></p>
+    <div class="score-bar-wrap"><div class="score-bar" id="score-bar" style="width:0%"></div></div>
+    <div id="results-detail" class="results-detail"></div>
+  </section>
+
+  <!-- ANSWER KEY -->
+  <section class="answer-key-section" aria-labelledby="key-heading">
+    <h2 id="key-heading" class="section-label">Reference — Answer Key</h2>
+    <p class="key-note">For instructor or self-check use after attempting all items.</p>
+    <button type="button" class="btn btn-outline" id="btn-toggle-key">Show Answer Key</button>
+    <div id="answer-key-content" class="answer-key-content hidden"></div>
+  </section>
+
+</main>
+
+<footer class="exam-footer">
+  <p>CS 160 — Input/Output Systems &nbsp;·&nbsp; Weeks 15–16 Practice Examination</p>
+  <p style="margin:0.25rem 0 0; font-style:italic;">Good luck! 💪</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ═══════════════════════════════════════════════
+     PART I — MULTIPLE CHOICE  (20 questions)
+  ═══════════════════════════════════════════════ */
+  const MC_QUESTIONS = [
+    { n:1,  q:"Which component of a computer system serves as a bridge between the CPU/Memory and external peripheral devices?",
+      opts:["Control Unit","Cache Memory","I/O Module","System Clock"] },
+    { n:2,  q:"Which of the following is classified as a COMMUNICATION type I/O device?",
+      opts:["Keyboard","Magnetic disk","Network Interface Card (NIC)","Camera"] },
+    { n:3,  q:"Based on typical I/O data rates, which device has the LOWEST transfer speed?",
+      opts:["Optical disk","Modem","Mouse","Keyboard"] },
+    { n:4,  q:"Which of the following is NOT one of the five functions of an I/O Controller?",
+      opts:["Control & Timing","Data Buffering","Arithmetic Processing","Error Detection"] },
+    { n:5,  q:"A serial interface differs from a parallel interface in that it:",
+      opts:["Transfers multiple bits simultaneously over many wires","Transfers bits one at a time over a single signal wire","Is always faster than a parallel interface","Requires no ground wire"] },
+    { n:6,  q:"Which term describes the time required to perform a single bit transfer on an interface?",
+      opts:["Throughput","Bandwidth","Latency","Clock rate"] },
+    { n:7,  q:"In data multiplexing, what is the role of the DEMULTIPLEXOR?",
+      opts:["Accepts inputs from many sources and sends them one at a time onto one channel","Receives transmitted pieces and sends each piece to its appropriate destination","Amplifies the signal over long distances","Converts serial signals into parallel signals"] },
+    { n:8,  q:"Full-duplex communication means:",
+      opts:["Data travels in only one direction","Data travels in both directions, but only one direction at a time","Data travels in both directions simultaneously","Data travels in a circular pattern"] },
+    { n:9,  q:"The fetch-store paradigm states that ALL bus operations — including I/O — are performed using only:",
+      opts:["Three operations: fetch, store, and execute","Two operations: fetch (read) and store (write)","Four operations: fetch, store, interrupt, and reset","One universal operation called bus transfer"] },
+    { n:10, q:"When no device responds to a bus address request, the bus hardware reports a:",
+      opts:["Timeout warning","Address conflict","Bus error","Null pointer exception"] },
+    { n:11, q:"What is the main disadvantage of Programmed I/O?",
+      opts:["It requires an expensive DMA controller","The CPU wastes considerable time repeatedly polling the device","It can only be used with serial interfaces","It requires full-duplex communication"] },
+    { n:12, q:"In Interrupt-Driven I/O, when does the CPU check for an interrupt?",
+      opts:["Only at the start of each program","At the end of each instruction cycle","Every 100 milliseconds on a hardware timer","Only when the I/O device sends a direct signal to RAM"] },
+    { n:13, q:"When handling an interrupt, what must the CPU save FIRST before calling the interrupt handler?",
+      opts:["The DMA transfer parameters","The bus address map","The current execution state (registers, program counter, condition codes)","The I/O device's status bits"] },
+    { n:14, q:"Which DMA configuration uses the bus TWICE per transfer — once from I/O to DMA, then from DMA to memory?",
+      opts:["Single Bus, Integrated DMA","Separate I/O Bus","Single Bus, Detached DMA","Crossbar DMA"] },
+    { n:15, q:"What effect does a caching memory system have on DMA performance?",
+      opts:["Cache slows DMA by creating address conflicts","Cache eliminates the need for DMA entirely","Cache reduces CPU memory accesses, freeing the bus more often for DMA use","Cache forces DMA to use the bus three times per transfer"] },
+    { n:16, q:"Which bus standard emerged as a de facto standard largely due to the popularity of IBM PCs, running at 8.33 MHz with 16-bit transfers?",
+      opts:["PCI","USB","SCSI","ISA"] },
+    { n:17, q:"The PCI bridge in a PCI-based system primarily acts as:",
+      opts:["A replacement for the CPU during I/O operations","A data buffer that keeps PCI independent of processor speed","A converter from serial USB to parallel PCI signals","An address assigner for all PCI devices"] },
+    { n:18, q:"In a SCSI bus, the INITIATOR is the controller that:",
+      opts:["Carries out commands received from the target","Performs the actual disk seek operation","Can select a target and send commands specifying operations","Controls the USB root hub"] },
+    { n:19, q:"What is the topology used by a USB system?",
+      opts:["Ring topology","Mesh topology","Star topology","Tree topology"] },
+    { n:20, q:"Compared to a traditional bus, the key advantage of a switching fabric is:",
+      opts:["It is significantly cheaper to implement","It allows only one pair of devices to communicate at a time","It allows multiple pairs of attached units to communicate simultaneously","It eliminates the need for address lines"] },
+  ];
+
+  const MC_ANSWERS = ["C","C","D","C","B","C","B","C","B","C","B","B","C","C","C","D","B","C","D","C"];
+
+  /* ═══════════════════════════════════════════════
+     PART II — IDENTIFICATION  (10 questions)
+  ═══════════════════════════════════════════════ */
+  const ID_QUESTIONS = [
+    "I am the performance measure that tells you how much data can be transferred per unit of time on an interface, usually expressed in MB/s or bps. What am I?",
+    "I am the I/O technique where the CPU issues an I/O command and continues executing other instructions; the device only contacts the CPU when it is finished. What technique am I?",
+    "I am a specialized controller that takes over an entire I/O data transfer from the CPU. The CPU only gives me the initial parameters and I handle everything, sending an interrupt when done. What am I?",
+    "I am the access paradigm used by ALL bus transactions. Under my paradigm, every operation — whether accessing memory or controlling I/O devices — is either a read or a write. What am I?",
+    "I am the hardware component that connects two different buses together, mapping address ranges from one bus to the other and translating signals and protocols between them. What am I?",
+    "I am the act of the CPU repeatedly and continuously checking the status bits of an I/O device to find out whether the device has finished its operation. I am associated with Programmed I/O. What am I called?",
+    "I am the type of interface where data travels over a single signal wire (plus a ground wire), with bits sent one at a time in sequence. USB and SATA are examples of me. What interface type am I?",
+    "I am the phase of a SCSI bus operation where — after winning arbitration — the initiator establishes a logical connection with a specific target device. What SCSI phase am I?",
+    "I am the standard bus developed collaboratively by Intel, Microsoft, Compaq, HP, and others. I support plug-and-play, use a tree topology with a root hub, and in my second version reach 480 Mbits/s. What am I?",
+    "I am the hardware device that monitors all bus requests but responds ONLY to requests whose addresses fall within my assigned address range. I perform the fetch-store operations for my portion of the address space. What am I called?",
+  ];
+
+  const ID_KEYS = [
+    ["throughput"],
+    ["interrupt-driven i/o", "interrupt driven i/o", "interrupt-driven","interrupt driven"],
+    ["dma controller","direct memory access controller","dma","direct memory access"],
+    ["fetch-store paradigm","fetch store paradigm","fetch-store","fetch store"],
+    ["bridge"],
+    ["polling"],
+    ["serial interface","serial"],
+    ["selection"],
+    ["usb","universal serial bus"],
+    ["interface","interface controller","i/o interface","i/o controller"],
+  ];
+
+  const ID_OFFICIAL = [
+    "Throughput",
+    "Interrupt-Driven I/O",
+    "DMA Controller (Direct Memory Access)",
+    "Fetch-Store Paradigm",
+    "Bridge",
+    "Polling",
+    "Serial Interface",
+    "Selection (SCSI Phase)",
+    "USB (Universal Serial Bus)",
+    "Interface / Interface Controller",
+  ];
+
+  /* ═══════════════════════════════════════════════
+     PART III — ENUMERATION  (10 items)
+  ═══════════════════════════════════════════════ */
+  const ENUM_STEMS = [
+    "Enumerate the THREE categories of I/O devices and give ONE example for each (format: Category — Example).",
+    "Enumerate the FIVE functions of an I/O Controller.",
+    "Enumerate the THREE principal I/O techniques (Processor-I/O interaction techniques).",
+    "Enumerate the FIVE steps the CPU performs when HANDLING AN INTERRUPT, in correct order.",
+    "Enumerate the FOUR information items the CPU must provide to the DMA controller before a DMA transfer can begin.",
+    "Enumerate the THREE DMA configurations and how many times the bus is used per transfer for each.",
+    "Enumerate the FOUR bus standards discussed in the lecture (include their full names).",
+    "Enumerate the THREE groups of lines (wire groups) in a conceptual bus design and briefly state the purpose of each.",
+    "Enumerate the SIX stages in the Evolution of I/O in chronological order (earliest to most advanced).",
+    "Enumerate the FOUR phases of a SCSI bus operation in the correct order they occur.",
+  ];
+
+  /* Accepted keyword sets for each enum item */
+  const ENUM_KEYS = [
+    // 1 — 3 I/O categories
+    [["human readable","human-readable"],["machine readable","machine-readable"],["communication"]],
+    // 2 — 5 controller functions
+    [["control","timing"],["cpu communication","cpu comm"],["device communication","device comm"],["data buffering","buffering"],["error detection","error"]],
+    // 3 — 3 I/O techniques
+    [["programmed"],["interrupt"],["dma","direct memory"]],
+    // 4 — 5 interrupt steps
+    [["save","execution state","register","program counter"],["determine","which device","issued"],["call","procedure","handler","isr"],["clear","interrupt signal","bus"],["restore","execution state","restore"]],
+    // 5 — 4 DMA params
+    [["read","write","direction"],["device address","device"],["memory address","starting address","memory block"],["amount","data to be","how many","size"]],
+    // 6 — 3 DMA configs
+    [["detached","single bus detached"],["integrated","single bus integrated"],["separate","i/o bus","separate i/o"]],
+    // 7 — 4 bus standards
+    [["isa","industry standard"],["pci","peripheral component"],["scsi","small computer"],["usb","universal serial"]],
+    // 8 — 3 bus line groups
+    [["control"],["address"],["data"]],
+    // 9 — 6 I/O evolution stages
+    [["cpu directly","direct control","directly controlled"],["programmed i/o","i/o module","controller added"],["interrupt","notification"],["dma","direct memory access","direct access to memory"],["processor","i/o channel","i/o processor"],["local memory","adds local","i/o module adds"]],
+    // 10 — 4 SCSI phases
+    [["arbitration"],["selection"],["reselection"],["data transfer","transfer"]],
+  ];
+
+  const ENUM_OFFICIAL = [
+    "1. Human Readable (e.g. Screen/Keyboard)  2. Machine Readable (e.g. Magnetic disk)  3. Communication (e.g. Modem/NIC)",
+    "1. Control & Timing  2. CPU Communication  3. Device Communication  4. Data Buffering  5. Error Detection",
+    "1. Programmed I/O  2. Interrupt-Driven I/O  3. Direct Memory Access (DMA)",
+    "1. Save current execution state  2. Determine which device issued interrupt  3. Call the ISR/handler  4. Clear interrupt signal from bus  5. Restore execution state",
+    "1. Read/Write (direction)  2. Device address  3. Starting memory address  4. Amount of data to transfer",
+    "1. Single Bus Detached DMA (×2)  2. Single Bus Integrated DMA (×1)  3. Separate I/O Bus (×1)",
+    "1. ISA — Industry Standard Architecture  2. PCI — Peripheral Component Interconnect  3. SCSI — Small Computer System Interface  4. USB — Universal Serial Bus",
+    "1. Control Lines — carry command/timing signals  2. Address Lines — specify location/device  3. Data Lines — carry the actual data",
+    "1. CPU directly controlled peripherals  2. I/O module (controller) added — programmed I/O  3. Interrupts employed  4. DMA added  5. I/O module → I/O processor  6. I/O module adds local memory",
+    "1. Arbitration  2. Selection  3. Reselection  4. Data Transfer",
+  ];
+
+  /* ═══════════════════════════════════════════════
+     RENDER HELPERS
+  ═══════════════════════════════════════════════ */
+  function el(tag, attrs, ...children) {
+    const e = document.createElement(tag);
+    Object.entries(attrs || {}).forEach(([k, v]) => {
+      if (k === "class") e.className = v;
+      else e.setAttribute(k, v);
+    });
+    children.forEach(c => {
+      if (typeof c === "string") e.appendChild(document.createTextNode(c));
+      else if (c) e.appendChild(c);
+    });
+    return e;
+  }
+
+  function renderMC() {
+    const container = document.getElementById("mc-container");
+    MC_QUESTIONS.forEach(function (q) {
+      const item = el("div", { class: "mc-item", "data-q": q.n });
+      const stem = el("p", { class: "mc-stem" }, q.n + ". " + q.q);
+      const opts = el("div", { class: "mc-options" });
+      const letters = ["A","B","C","D"];
+      q.opts.forEach(function (o, i) {
+        const lbl = el("label", {});
+        const inp = el("input", { type: "radio", name: "mc_" + q.n, value: letters[i] });
+        const span = el("span", {}, letters[i] + ". " + o);
+        lbl.appendChild(inp);
+        lbl.appendChild(span);
+        opts.appendChild(lbl);
+      });
+      item.appendChild(stem);
+      item.appendChild(opts);
+      container.appendChild(item);
+    });
+  }
+
+  function renderID() {
+    const container = document.getElementById("id-container");
+    ID_QUESTIONS.forEach(function (q, i) {
+      const n = i + 1;
+      const item = el("div", { class: "id-item", "data-id": n });
+      const lbl = el("label", { for: "id_" + n }, n + ". " + q);
+      const inp = el("input", { type: "text", id: "id_" + n, name: "id_" + n, autocomplete: "off", placeholder: "Your answer…" });
+      item.appendChild(lbl);
+      item.appendChild(inp);
+      container.appendChild(item);
+    });
+  }
+
+  function renderEnum() {
+    const container = document.getElementById("enum-container");
+    ENUM_STEMS.forEach(function (stem, i) {
+      const n = i + 1;
+      const item = el("div", { class: "enum-item", "data-enum": n });
+      const lbl = el("label", { for: "enum_" + n }, n + ". " + stem);
+      const ta = el("textarea", { id: "enum_" + n, name: "enum_" + n, placeholder: "Write one answer per line…" });
+      item.appendChild(lbl);
+      item.appendChild(ta);
+      container.appendChild(item);
+    });
+  }
+
+  function renderAnswerKey() {
+    const container = document.getElementById("answer-key-content");
+
+    const t1 = el("div", { class: "key-section-title" }, "Part I — Multiple Choice");
+    const grid = el("div", { class: "key-grid" });
+    MC_ANSWERS.forEach(function (a, i) {
+      grid.appendChild(el("div", {}, (i+1) + ". " + a));
+    });
+
+    const t2 = el("div", { class: "key-section-title" }, "Part II — Identification");
+    const idList = el("div", {});
+    ID_OFFICIAL.forEach(function (a, i) {
+      idList.appendChild(el("div", { style: "padding:0.2rem 0;border-bottom:1px dotted var(--rule)" }, (i+1) + ". " + a));
+    });
+
+    const t3 = el("div", { class: "key-section-title" }, "Part III — Enumeration");
+    const enumList = el("div", {});
+    ENUM_OFFICIAL.forEach(function (a, i) {
+      enumList.appendChild(el("div", { style: "padding:0.3rem 0;border-bottom:1px dotted var(--rule);font-size:0.85rem" }, (i+1) + ". " + a));
+    });
+
+    container.appendChild(t1);
+    container.appendChild(grid);
+    container.appendChild(t2);
+    container.appendChild(idList);
+    container.appendChild(t3);
+    container.appendChild(enumList);
+  }
+
+  /* ═══════════════════════════════════════════════
+     GRADING
+  ═══════════════════════════════════════════════ */
+  function normalise(s) {
+    return (s || "").toLowerCase().trim().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ");
+  }
+
+  function checkID(user, keys) {
+    const u = normalise(user);
+    return keys.some(function (k) {
+      return (Array.isArray(k) ? k : [k]).some(function (variant) {
+        return u.includes(normalise(variant));
+      });
+    });
+  }
+
+  function checkEnum(user, keyGroups) {
+    const lines = user.split(/\n/).map(normalise).filter(Boolean).join(" ");
+    return keyGroups.every(function (group) {
+      return group.some(function (variant) {
+        return lines.includes(normalise(variant));
+      });
+    });
+  }
+
+  function clearAnswerGlows() {
+    document.querySelectorAll(".mc-item,.id-item,.enum-item").forEach(function (el) {
+      el.classList.remove("answer-correct","answer-incorrect");
+    });
+  }
+
+  function grade() {
+    let mcCorrect = 0, idCorrect = 0, enumCorrect = 0;
+    const totalMC = MC_QUESTIONS.length;
+    const totalID = ID_QUESTIONS.length;
+    const totalEnum = ENUM_STEMS.length;
+    const total = totalMC + totalID * 2 + totalEnum;
+
+    clearAnswerGlows();
+
+    const mcRows = [];
+    MC_QUESTIONS.forEach(function (q) {
+      const sel = document.querySelector("input[name='mc_" + q.n + "']:checked");
+      const user = sel ? sel.value : "—";
+      const correct = MC_ANSWERS[q.n - 1];
+      const ok = user === correct;
+      if (ok) mcCorrect++;
+      mcRows.push({ num: q.n, user, correct, ok });
+    });
+
+    const idRows = [];
+    ID_QUESTIONS.forEach(function (_, i) {
+      const n = i + 1;
+      const inp = document.getElementById("id_" + n);
+      const user = inp ? inp.value : "";
+      const ok = checkID(user, ID_KEYS[i]);
+      if (ok) idCorrect++;
+      idRows.push({ num: n, user, official: ID_OFFICIAL[i], ok });
+    });
+
+    const enumRows = [];
+    ENUM_STEMS.forEach(function (_, i) {
+      const n = i + 1;
+      const ta = document.getElementById("enum_" + n);
+      const user = ta ? ta.value : "";
+      const ok = checkEnum(user, ENUM_KEYS[i]);
+      if (ok) enumCorrect++;
+      enumRows.push({ num: n, user, official: ENUM_OFFICIAL[i], ok });
+    });
+
+    const score = mcCorrect + idCorrect * 2 + enumCorrect;
+    const pct = Math.round((score / total) * 100);
+
+    const summary = document.getElementById("results-summary");
+    summary.textContent =
+      "Score: " + score + " / " + total + " (" + pct + "%)" +
+      "  ·  Part I: " + mcCorrect + "/" + totalMC +
+      "  ·  Part II: " + idCorrect + "/" + totalID +
+      "  ·  Part III: " + enumCorrect + "/" + totalEnum;
+
+    setTimeout(function () {
+      document.getElementById("score-bar").style.width = pct + "%";
+    }, 100);
+
+    let html = "<h3>Part I — Multiple Choice</h3><table><thead><tr><th>#</th><th>Your Answer</th><th>Key</th><th>Result</th></tr></thead><tbody>";
+    mcRows.forEach(function (r) {
+      html += "<tr><td>" + r.num + "</td><td>" + r.user + "</td><td>" + r.correct + "</td><td class='" + (r.ok ? "correct" : "incorrect") + "'>" + (r.ok ? "✔ Correct" : "✘ Wrong") + "</td></tr>";
+    });
+    html += "</tbody></table>";
+
+    html += "<h3>Part II — Identification</h3><table><thead><tr><th>#</th><th>Your Answer</th><th>Status</th></tr></thead><tbody>";
+    idRows.forEach(function (r) {
+      html += "<tr><td>" + r.num + "</td><td>" + escapeHtml(r.user) + "</td><td class='" + (r.ok ? "correct" : "incorrect") + "'>" + (r.ok ? "✔ Correct" : "✘ Key: " + escapeHtml(r.official)) + "</td></tr>";
+    });
+    html += "</tbody></table>";
+
+    html += "<h3>Part III — Enumeration</h3><table><thead><tr><th>#</th><th>Status</th><th>Expected (summary)</th></tr></thead><tbody>";
+    enumRows.forEach(function (r) {
+      html += "<tr><td>" + r.num + "</td><td class='" + (r.ok ? "correct" : "incorrect") + "'>" + (r.ok ? "✔ Correct" : "✘ Incomplete") + "</td><td style='font-size:0.82rem'>" + escapeHtml(r.official) + "</td></tr>";
+    });
+    html += "</tbody></table>";
+
+    document.getElementById("results-detail").innerHTML = html;
+
+    mcRows.forEach(function (r) {
+      const block = document.querySelector(".mc-item[data-q='" + r.num + "']");
+      if (block) block.classList.add(r.ok ? "answer-correct" : "answer-incorrect");
+    });
+    idRows.forEach(function (r) {
+      const block = document.querySelector(".id-item[data-id='" + r.num + "']");
+      if (block) block.classList.add(r.ok ? "answer-correct" : "answer-incorrect");
+    });
+    enumRows.forEach(function (r) {
+      const block = document.querySelector(".enum-item[data-enum='" + r.num + "']");
+      if (block) block.classList.add(r.ok ? "answer-correct" : "answer-incorrect");
+    });
+
+    document.getElementById("results-panel").classList.remove("hidden");
+    document.getElementById("results-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function escapeHtml(t) {
+    const d = document.createElement("div");
+    d.textContent = t;
+    return d.innerHTML;
+  }
+
+  /* ═══════════════════════════════════════════════
+     LIVE FEEDBACK (instant glow on answer)
+  ═══════════════════════════════════════════════ */
+  function applyGlow(block, ok) {
+    block.classList.remove("answer-correct", "answer-incorrect");
+    if (ok === true)  block.classList.add("answer-correct");
+    if (ok === false) block.classList.add("answer-incorrect");
+  }
+
+  function attachLiveListeners() {
+    // Part I — MC: fire on radio change
+    MC_QUESTIONS.forEach(function (q) {
+      const block = document.querySelector(".mc-item[data-q='" + q.n + "']");
+      if (!block) return;
+      block.querySelectorAll("input[type='radio']").forEach(function (radio) {
+        radio.addEventListener("change", function () {
+          const sel = document.querySelector("input[name='mc_" + q.n + "']:checked");
+          const user = sel ? sel.value : null;
+          const correct = MC_ANSWERS[q.n - 1];
+          applyGlow(block, user !== null ? user === correct : null);
+        });
+      });
+    });
+
+    // Part II — ID: fire on every keystroke, confirm on blur
+    ID_QUESTIONS.forEach(function (_, i) {
+      const n = i + 1;
+      const inp = document.getElementById("id_" + n);
+      const block = document.querySelector(".id-item[data-id='" + n + "']");
+      if (!inp || !block) return;
+      function evalID() {
+        const user = inp.value.trim();
+        if (!user) { block.classList.remove("answer-correct","answer-incorrect"); return; }
+        applyGlow(block, checkID(user, ID_KEYS[i]));
+      }
+      inp.addEventListener("input", evalID);
+      inp.addEventListener("blur",  evalID);
+    });
+
+    // Part III — Enum: fire on input and blur
+    ENUM_STEMS.forEach(function (_, i) {
+      const n = i + 1;
+      const ta = document.getElementById("enum_" + n);
+      const block = document.querySelector(".enum-item[data-enum='" + n + "']");
+      if (!ta || !block) return;
+      function evalEnum() {
+        const user = ta.value.trim();
+        if (!user) { block.classList.remove("answer-correct","answer-incorrect"); return; }
+        applyGlow(block, checkEnum(user, ENUM_KEYS[i]));
+      }
+      ta.addEventListener("input", evalEnum);
+      ta.addEventListener("blur",  evalEnum);
+    });
+  }
+
+  /* ═══════════════════════════════════════════════
+     INIT
+  ═══════════════════════════════════════════════ */
+  function init() {
+    renderMC();
+    renderID();
+    renderEnum();
+    renderAnswerKey();
+    attachLiveListeners();
+
+    const today = new Date().toISOString().slice(0, 10);
+    const dateInput = document.getElementById("exam_date");
+    if (dateInput) dateInput.value = today;
+
+    document.getElementById("exam-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      grade();
+    });
+
+    document.getElementById("btn-reset").addEventListener("click", function () {
+      if (!confirm("Clear all answers? This cannot be undone.")) return;
+      clearAnswerGlows();
+      document.getElementById("exam-form").reset();
+      document.getElementById("results-panel").classList.add("hidden");
+      document.getElementById("score-bar").style.width = "0%";
+      if (dateInput) dateInput.value = today;
+      // Re-clear any residual glows after reset
+      setTimeout(clearAnswerGlows, 50);
+    });
+
+    document.getElementById("btn-print").addEventListener("click", function () {
+      window.print();
+    });
+
+    document.getElementById("btn-toggle-key").addEventListener("click", function () {
+      const key = document.getElementById("answer-key-content");
+      const hidden = key.classList.toggle("hidden");
+      this.textContent = hidden ? "Show Answer Key" : "Hide Answer Key";
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

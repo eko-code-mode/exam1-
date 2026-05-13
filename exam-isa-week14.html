@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e3a5f" />
+  <title>ISA Week 14 — Practice Exam | ACEE12</title>
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #4a4a4a;
+      --border: #2c3e50;
+      --accent: #1e3a5f;
+      --paper: #faf9f7;
+      --rule: #c9c4bc;
+      --success: #1b5e20;
+      --error: #8b1538;
+      --glow-green: rgba(46,125,50,0.55);
+      --glow-red: rgba(198,40,40,0.55);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{font-size:100%;-webkit-text-size-adjust:100%;overflow-x:hidden}
+    body{margin:0;font-family:"Georgia","Times New Roman",Times,serif;color:var(--ink);background:var(--paper);line-height:1.5;overflow-x:hidden;padding-left:env(safe-area-inset-left,0);padding-right:env(safe-area-inset-right,0);padding-bottom:env(safe-area-inset-bottom,0)}
+    .exam-header{border-bottom:3px double var(--border);background:#fff;padding:2rem clamp(0.875rem,4vw,1.5rem) 1.75rem;padding-top:max(1.25rem,env(safe-area-inset-top,0))}
+    .header-inner{max-width:48rem;margin:0 auto;text-align:center}
+    .course-code{margin:0;font-size:1.05rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+    .subtitle{margin:.35rem 0 0;font-size:.95rem;font-style:italic;color:var(--muted)}
+    .exam-title{margin:1rem 0 .75rem;font-size:clamp(1.2rem,4.8vw + 0.5rem,1.65rem);font-weight:700;letter-spacing:.02em;border:none;line-height:1.25;hyphens:auto;overflow-wrap:break-word}
+    .instructions-lead{margin:0 auto;font-size:clamp(.88rem,2.5vw,.95rem);color:var(--muted);max-width:40rem;line-height:1.45;overflow-wrap:break-word}
+    .exam-main{max-width:48rem;margin:0 auto;padding:1.75rem clamp(.875rem,4vw,1.5rem) 3rem;width:100%}
+    .student-block{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--rule)}
+    .section-label{font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin:0 0 1rem;font-weight:700}
+    .student-grid{display:grid;gap:.85rem}
+    @media(min-width:36rem){.student-grid{grid-template-columns:1fr 1fr}.student-grid .field:first-child{grid-column:1 / -1}}
+    .field{display:flex;flex-direction:column;gap:.35rem;font-size:.95rem}
+    .field span{font-weight:600}
+    .field input{font-family:inherit;font-size:1rem;padding:.45rem .6rem;border:1px solid var(--rule);border-radius:2px;background:#fff}
+    .field input:focus{outline:2px solid var(--accent);outline-offset:1px}
+    .exam-part{margin-bottom:2.5rem}
+    .part-title{font-size:1.2rem;margin:0 0 .35rem;padding-bottom:.35rem;border-bottom:1px solid var(--ink);font-weight:700}
+    .part-direction{margin:.5rem 0 1.25rem;font-style:italic;color:var(--muted);font-size:.98rem}
+    .questions{display:flex;flex-direction:column;gap:1.35rem}
+    .mc-item,.id-item,.enum-item{padding:1rem 1rem 1rem 1rem;border-left:3px solid var(--rule);border-radius:2px;transition:box-shadow .35s ease,border-left-color .35s ease,background-color .35s ease}
+    .enumeration-subtitle{margin:.25rem 0 .75rem;font-size:.95rem;font-weight:600;color:var(--accent)}
+    .enum-rule{border:none;border-top:1px solid var(--rule);margin:.75rem 0 1rem}
+    .footer-note{margin:.75rem 0 0;font-style:italic;color:var(--muted)}
+    .mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct{border-left-color:#2e7d32;background-color:rgba(46,125,50,.06);box-shadow:0 0 0 1px rgba(46,125,50,.35),0 0 20px 4px var(--glow-green),0 0 40px 8px rgba(46,125,50,.15);animation:glow-green-pulse 2s ease-in-out infinite}
+    .mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{border-left-color:#c62828;background-color:rgba(198,40,40,.06);box-shadow:0 0 0 1px rgba(198,40,40,.4),0 0 20px 4px var(--glow-red),0 0 40px 8px rgba(198,40,40,.18);animation:glow-red-pulse 2s ease-in-out infinite}
+    @keyframes glow-green-pulse{0%,100%{box-shadow:0 0 0 1px rgba(46,125,50,.35),0 0 16px 3px var(--glow-green),0 0 32px 6px rgba(46,125,50,.12)}50%{box-shadow:0 0 0 1px rgba(46,125,50,.45),0 0 24px 6px rgba(46,125,50,.65),0 0 48px 10px rgba(46,125,50,.2)}}
+    @keyframes glow-red-pulse{0%,100%{box-shadow:0 0 0 1px rgba(198,40,40,.4),0 0 16px 3px var(--glow-red),0 0 32px 6px rgba(198,40,40,.14)}50%{box-shadow:0 0 0 1px rgba(198,40,40,.5),0 0 24px 6px rgba(198,40,40,.7),0 0 48px 10px rgba(198,40,40,.22)}}
+    .mc-stem{margin:0 0 .65rem;font-weight:600;overflow-wrap:break-word;hyphens:auto}
+    .mc-options{display:flex;flex-direction:column;gap:.35rem}
+    .mc-options label{display:flex;align-items:flex-start;gap:.65rem;cursor:pointer;font-size:clamp(.9rem,2.8vw,.98rem);padding:.5rem .35rem .5rem .15rem;min-height:2.75rem;touch-action:manipulation;-webkit-tap-highlight-color:rgba(30,58,95,.12);border-radius:4px}
+    .mc-options label:active{background:rgba(30,58,95,.06)}
+    .mc-options input{margin-top:.2rem;flex-shrink:0;width:1.15rem;height:1.15rem;accent-color:var(--accent)}
+    .mc-options span{overflow-wrap:break-word;min-width:0}
+    .identification .id-item label{display:block;font-weight:600;margin-bottom:.4rem;overflow-wrap:break-word;hyphens:auto;line-height:1.4}
+    .identification .id-item input[type="text"]{width:100%;max-width:100%;font-family:inherit;font-size:1rem;padding:.55rem .65rem;min-height:2.75rem;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;background:#fff}
+    .identification .id-item input:focus{outline:2px solid var(--accent);outline-offset:0}
+    .enumeration-inputs .enum-item label{display:block;font-weight:600;margin-bottom:.45rem;overflow-wrap:break-word;line-height:1.45}
+    .enumeration-inputs .enum-item textarea{width:100%;max-width:100%;min-height:6.5rem;font-family:inherit;font-size:1rem;padding:.55rem .65rem;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;background:#fff;resize:vertical;line-height:1.45}
+    .enumeration-inputs .enum-item textarea:focus{outline:2px solid var(--accent);outline-offset:0}
+    .actions{display:flex;flex-wrap:wrap;gap:.65rem;margin:2rem 0;padding-top:1.5rem;border-top:1px solid var(--rule)}
+    .btn{font-family:"Segoe UI",system-ui,sans-serif;font-size:.9rem;padding:.6rem 1.1rem;min-height:2.75rem;border-radius:4px;cursor:pointer;border:1px solid var(--border);touch-action:manipulation;-webkit-tap-highlight-color:rgba(30,58,95,.15)}
+    .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+    .btn-primary:hover{background:#152d49}
+    .btn-secondary{background:#fff;color:var(--ink)}
+    .btn-outline{background:transparent;color:var(--accent);border-color:var(--accent)}
+    .results-panel{margin-top:1.5rem;padding:1.25rem 1.25rem 1.5rem;border:1px solid var(--border);background:#fff}
+    .results-panel.hidden{display:none}
+    .results-summary{font-size:1.05rem;margin:0 0 1rem;font-weight:600}
+    .results-detail{font-size:.92rem;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+    .results-detail h3{font-size:.95rem;margin:1.25rem 0 .5rem;font-family:"Segoe UI",system-ui,sans-serif;font-weight:600}
+    .results-detail h3:first-child{margin-top:0}
+    .results-detail table{width:100%;min-width:16rem;border-collapse:collapse;margin-top:.75rem}
+    .results-detail th,.results-detail td{text-align:left;padding:.45rem .5rem;border:1px solid var(--rule);overflow-wrap:anywhere;word-break:break-word}
+    .results-detail th{background:#eef1f4;font-family:"Segoe UI",system-ui,sans-serif;font-size:.8rem}
+    .correct{color:var(--success)}
+    .incorrect{color:var(--error)}
+    .answer-key-section{margin-top:2.5rem;padding-top:1.5rem;border-top:2px solid var(--rule)}
+    .key-note{font-size:.9rem;color:var(--muted);margin:0 0 1rem}
+    .answer-key-content{margin-top:1rem;padding:1rem;background:#fff;border:1px solid var(--rule);font-size:.9rem}
+    .answer-key-content.hidden{display:none}
+    .key-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,7.5rem),1fr));gap:.35rem .75rem}
+    .key-grid div{padding:.2rem 0;border-bottom:1px dotted var(--rule)}
+    .exam-footer{text-align:center;padding:1.25rem clamp(.75rem,3vw,1.5rem);font-size:clamp(.75rem,2.5vw,.8rem);color:var(--muted);border-top:1px solid var(--rule);background:#fff;line-height:1.6;overflow-wrap:break-word}
+    @media(max-width:36rem){.course-code{font-size:.82rem;letter-spacing:.03em}.subtitle{font-size:.88rem}.part-title{font-size:1.08rem}.part-direction{font-size:.9rem}.mc-item,.id-item,.enum-item{padding-left:.75rem;padding-right:0;margin-inline:0}.enumeration-inputs .enum-item textarea{font-size:16px;min-height:7rem}.mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct{animation:none;box-shadow:0 0 0 1px rgba(46,125,50,.35),0 0 14px 3px var(--glow-green)}.mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{animation:none;box-shadow:0 0 0 1px rgba(198,40,40,.4),0 0 14px 3px var(--glow-red)}.actions{flex-direction:column;align-items:stretch}.actions .btn{width:100%;justify-content:center}.results-panel{padding:1rem}.results-detail th,.results-detail td{font-size:.8rem;padding:.35rem .4rem}.field input,.identification .id-item input[type="text"]{font-size:16px}.key-grid{grid-template-columns:1fr}.answer-key-content{padding:.75rem;font-size:.85rem}}
+    @media(prefers-reduced-motion:reduce){.mc-item,.id-item,.enum-item{transition:none}.mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct,.mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{animation:none}}
+    @media print{.actions,#btn-toggle-key{display:none!important}body{background:#fff}.mc-options input{print-color-adjust:exact;-webkit-print-color-adjust:exact}.mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct,.mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{animation:none;box-shadow:none}.mc-item.answer-correct,.id-item.answer-correct,.enum-item.answer-correct{border-left:4px solid #2e7d32;background:rgba(46,125,50,.08)}.mc-item.answer-incorrect,.id-item.answer-incorrect,.enum-item.answer-incorrect{border-left:4px solid #c62828;background:rgba(198,40,40,.08)}}
+  </style>
+</head>
+<body>
+  <header class="exam-header">
+    <div class="header-inner">
+      <p class="course-code">ACEE12 — Microprocessor Systems</p>
+      <p class="subtitle">Practice Examination · Week 14</p>
+      <h1 class="exam-title">📝 Instruction Set Architecture — Practice Exam</h1>
+      <p class="instructions-lead">Part I: Multiple Choice (30 items). Part II: Identification (20 items). Part III: Enumeration (15 items). Answer highlights update as you type or select. Use one line per answer item in enumeration.</p>
+    </div>
+  </header>
+
+  <main class="exam-main">
+    <section class="student-block" aria-labelledby="student-info-heading">
+      <h2 id="student-info-heading" class="section-label">Examinee Information</h2>
+      <div class="student-grid">
+        <label class="field">
+          <span>Name:</span>
+          <input type="text" name="student_name" id="student_name" autocomplete="name" />
+        </label>
+        <label class="field">
+          <span>Section / Student No.:</span>
+          <input type="text" name="student_id" id="student_id" autocomplete="off" />
+        </label>
+        <label class="field">
+          <span>Date:</span>
+          <input type="date" name="exam_date" id="exam_date" />
+        </label>
+      </div>
+    </section>
+
+    <form id="exam-form" novalidate>
+      <section class="exam-part" aria-labelledby="part1-heading">
+        <h2 id="part1-heading" class="part-title">Part I: Multiple Choice</h2>
+        <p class="part-direction">Choose the letter of the best answer.</p>
+        <div id="mc-container" class="questions"></div>
+      </section>
+
+      <section class="exam-part" aria-labelledby="part2-heading">
+        <h2 id="part2-heading" class="part-title">Part II: Identification</h2>
+        <p class="part-direction">Identify the correct term being described. Write your answer clearly in the space provided.</p>
+        <div id="id-container" class="questions identification"></div>
+      </section>
+
+      <section class="exam-part enumeration-block" aria-labelledby="part3-heading">
+        <h2 id="part3-heading" class="part-title">Part III: Enumeration</h2>
+        <p class="enumeration-subtitle">Write the correct answers being asked in each item.</p>
+        <hr class="enum-rule" />
+        <p class="part-direction">Write one answer per line inside the text area. For paired items (e.g. generation — technology), write both on the same line separated by a dash or space.</p>
+        <div id="enum-container" class="questions enumeration-inputs"></div>
+      </section>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Submit Examination</button>
+        <button type="button" class="btn btn-secondary" id="btn-reset">Clear All Responses</button>
+        <button type="button" class="btn btn-outline" id="btn-download">⬇ Download HTML</button>
+        <button type="button" class="btn btn-outline" id="btn-print">🖨 Print / Save PDF</button>
+      </div>
+    </form>
+
+    <section id="results-panel" class="results-panel hidden" aria-live="polite">
+      <h2 class="part-title">Examination Summary</h2>
+      <p id="results-summary" class="results-summary"></p>
+      <div id="results-detail" class="results-detail"></div>
+    </section>
+
+    <section class="answer-key-section" aria-labelledby="key-heading">
+      <h2 id="key-heading" class="section-label">Reference — Answer Key</h2>
+      <p class="key-note">For instructor or self-check use after attempting all items.</p>
+      <button type="button" class="btn btn-outline" id="btn-toggle-key">Show Answer Key</button>
+      <div id="answer-key-content" class="answer-key-content hidden"></div>
+    </section>
+  </main>
+
+  <footer class="exam-footer">
+    <p>ACEE12 Microprocessor Systems · Week 14 · Instruction Set Architecture</p>
+    <p class="footer-note">Good luck, Jericho! 💪</p>
+  </footer>
+
+  <script>
+  (function () {
+    "use strict";
+
+    /* ── PART I: MULTIPLE CHOICE ─────────────────────────────────────────── */
+    var MC_QUESTIONS = [
+      { n:1,  q:"What is the Instruction Set Architecture (ISA)?",
+        opts:["A type of programming language used to write OS software","The agreed-upon interface between all software and the hardware that executes it","A hardware component that stores data inside the CPU","A tool used by compilers to optimise memory allocation"] },
+      { n:2,  q:"Which file is produced when you run the command: gcc -S hello.c ?",
+        opts:["hello.o — object module","hello.exe — Windows executable","hello.s — assembly language file","a.out — the final executable"] },
+      { n:3,  q:"In the gcc compilation pipeline, which tool converts assembly language (.s) into a binary object file (.o)?",
+        opts:["The linker (ld)","The compiler (cc1)","The preprocessor (cpp)","The assembler (as)"] },
+      { n:4,  q:"What is the relationship between a high-level language (C) and assembly language during compilation?",
+        opts:["One-to-One","Many-to-One","One-to-Many","Many-to-Many"] },
+      { n:5,  q:"What is the relationship between assembly language and machine language during the assembly step?",
+        opts:["One-to-Many","One-to-One","Many-to-One","Many-to-Many"] },
+      { n:6,  q:"What does the linker (ld) do in the gcc pipeline?",
+        opts:["Converts C source code to assembly language","Translates assembly mnemonics into binary","Merges object files with library files to produce a single executable","Pre-processes #include directives and macros"] },
+      { n:7,  q:"Assembly language is best described as:",
+        opts:["The binary representation of a program","A high-level language used for application development","A symbolic representation of machine instructions","A set of instructions that the CPU can directly execute without translation"] },
+      { n:8,  q:"In RISC architecture, what is true about instruction length?",
+        opts:["Variable — different instructions have different sizes","Defined at runtime by the operating system","Fixed — all instructions are the same size","Depends on the number of operands specified"] },
+      { n:9,  q:"Which of the following is a characteristic of CISC architecture?",
+        opts:["One instruction executes in exactly one clock cycle","All instructions are the same fixed length","Multiple clock cycles may be required per instruction","Memory is accessed only through specific LOAD and STORE instructions"] },
+      { n:10, q:"For the C expression A = A × B, how many instructions does a RISC processor typically need compared to CISC?",
+        opts:["RISC needs fewer instructions","Both RISC and CISC always use the same number","RISC needs more instructions because it must LOAD, multiply, and STORE separately","RISC cannot perform multiplication at all"] },
+      { n:11, q:"What is the purpose of the Program Counter (PC) register in ARM?",
+        opts:["Stores the result of the most recent arithmetic operation","Points to the top of the current stack in memory","Holds the address of the next instruction to be executed","Stores the return address when a function is called"] },
+      { n:12, q:"Which ARM register is known as the Link Register (LR)?",
+        opts:["r12","r13","r14","r15"] },
+      { n:13, q:"Why does assembly language NOT use named variables the way C does?",
+        opts:["Assembly does not support any data types at all","Assembly language cannot access main memory","To keep the hardware simple","Registers have too much storage capacity for named variables"] },
+      { n:14, q:"In ARM architecture, each general-purpose register is how many bits wide?",
+        opts:["8 bits","16 bits","32 bits","64 bits"] },
+      { n:15, q:"What key optimisation do ARM compilers typically perform with registers?",
+        opts:["Store only the addresses (pointers) of frequently-used data in registers","Store the actual values of frequently-used data in registers","Keep as many program variables as possible in registers regardless of usage","Keep registers empty until execution begins"] },
+      { n:16, q:"In the ARM memory layout of instructions, consecutive instruction addresses differ by how many bytes?",
+        opts:["1 byte","2 bytes","4 bytes","8 bytes"] },
+      { n:17, q:"Which addressing mode has the operand value embedded directly inside the instruction itself — no memory lookup needed?",
+        opts:["Direct addressing","Register addressing","Indirect addressing","Immediate addressing"] },
+      { n:18, q:"In direct addressing, the effective address (EA) is computed as:",
+        opts:["EA = (A) — the contents of memory location A","EA = A — the value of the address field itself","EA = A + (R) — base plus displacement","EA = R — the contents of a register"] },
+      { n:19, q:"Which addressing mode requires TWO memory accesses to retrieve the operand?",
+        opts:["Direct addressing","Register addressing","Indirect addressing","Immediate addressing"] },
+      { n:20, q:"What is the effective address formula for Register Indirect addressing?",
+        opts:["EA = A","EA = R","EA = (R)","EA = A + (R)"] },
+      { n:21, q:"Displacement (indexed) addressing computes the effective address as:",
+        opts:["EA = A","EA = (A)","EA = (R)","EA = A + (R)"] },
+      { n:22, q:"Relative addressing is a special case of displacement addressing where the register used is:",
+        opts:["Stack Pointer (SP)","Link Register (LR)","Program Counter (PC)","Any general-purpose register"] },
+      { n:23, q:"Which instruction format requires the longest instruction word because it specifies all three operands — two inputs and the result — explicitly?",
+        opts:["Zero-address","One-address","Two-address","Three-address"] },
+      { n:24, q:"In a one-address instruction set, what is the implicit second operand typically used for all arithmetic?",
+        opts:["The stack","The accumulator register (AC)","The program counter","The link register"] },
+      { n:25, q:"Which instruction format uses a stack where ADD implicitly pops two values, adds them, and pushes the result?",
+        opts:["One-address","Two-address","Three-address","Zero-address"] },
+      { n:26, q:"According to Stallings' classification, which of the following is a Data Processing instruction?",
+        opts:["LOAD","PUSH","ADD","BRANCH"] },
+      { n:27, q:"What does RISC stand for?",
+        opts:["Reduced Instruction Set Computer","Rapid Integrated System Circuit","Register-Indexed Sequence Controller","Reconfigurable Instruction Set Cache"] },
+      { n:28, q:"What is the ISA concept that describes the part of processor design visible to software, such as the number of registers?",
+        opts:["Micro-architecture","Circuit design","Architecture","Digital design"] },
+      { n:29, q:"Which ARM register stores condition flags such as zero, negative, carry, and overflow?",
+        opts:["r13 (SP)","r14 (LR)","r15 (PC)","CPSR"] },
+      { n:30, q:"What is the three-step process performed by the Control Unit when it processes an instruction?",
+        opts:["Allocate, Execute, Store","Load, Process, Save","Fetch, Decode, Execute","Read, Write, Clear"] }
+    ];
+
+    var MC_ANSWERS = [
+      "B","C","D","C","B","C","C","C","C","C",
+      "C","C","C","C","B","C","D","B","C","C",
+      "D","C","D","B","D","C","A","C","D","C"
+    ];
+
+    /* ── PART II: IDENTIFICATION ─────────────────────────────────────────── */
+    var ID_QUESTIONS = [
+      "It is the complete agreed-upon interface between all software running on a machine and the hardware that executes it.",
+      "This is the intermediate file produced by the compiler (cc1) step in gcc, containing human-readable symbolic instructions with a .s extension.",
+      "This tool inside gcc merges one or more object files with relevant library files to produce a single final executable.",
+      "This is the term for a group of 32 bits — the standard data unit that corresponds to the width of one ARM register.",
+      "The special-purpose ARM register (r15) that always holds the address of the next instruction to be executed.",
+      "The special-purpose ARM register (r13) that points to the top of the current stack in memory.",
+      "The special-purpose ARM register (r14) that stores the return address when a subroutine or function is called.",
+      "The addressing mode where the operand is part of the instruction itself — no memory access required to retrieve it.",
+      "The addressing mode where the address field of the instruction contains the actual memory address of the operand. EA = A.",
+      "The addressing mode where the address field contains the address of a memory cell that holds the actual operand's address — requiring two memory accesses.",
+      "A special case of displacement addressing where the Program Counter (PC) is used as the base register, making code position-independent.",
+      "The part of a machine instruction that specifies which operation the CPU is to perform — for example ADD, SUB, or LOAD.",
+      "The aspect of processor design that is visible to software — such as the number of registers and the instruction set.",
+      "The implementation-level details of how a processor architecture is physically built — such as clock frequency — which are NOT directly visible to the programmer.",
+      "This tool converts assembly language (.s file) into binary object code (.o file) inside the gcc pipeline.",
+      "The ARM instruction mnemonic used to load a value from memory into a register.",
+      "The ARM instruction mnemonic used to store a value from a register into a memory location.",
+      "The CPU design philosophy that uses a small, fixed-length, highly optimised set of instructions that execute in one clock cycle. Example: ARM.",
+      "The CPU design philosophy that uses a larger set of complex, variable-length instructions that may take multiple clock cycles. Example: x86.",
+      "The addressing mode that computes the effective address as EA = A + (R), combining a base value from the instruction with a register value."
+    ];
+
+    var ID_KEYS = [
+      ["instruction set architecture","isa"],
+      ["assembly file","hello.s","assembly language file",".s file","assembly code"],
+      ["linker","ld","linkage editor"],
+      ["word"],
+      ["program counter","pc","r15"],
+      ["stack pointer","sp","r13"],
+      ["link register","lr","r14"],
+      ["immediate","immediate addressing"],
+      ["direct","direct addressing"],
+      ["indirect","indirect addressing"],
+      ["relative","relative addressing"],
+      ["opcode","operation code","op code"],
+      ["architecture"],
+      ["micro-architecture","microarchitecture","micro architecture"],
+      ["assembler","as"],
+      ["ldr","load register","load"],
+      ["str","store register","store"],
+      ["risc","reduced instruction set computer","reduced instruction set computing"],
+      ["cisc","complex instruction set computer","complex instruction set computing"],
+      ["displacement","displacement addressing","indexed addressing","indexed"]
+    ];
+
+    var ID_OFFICIAL = [
+      "Instruction Set Architecture (ISA)",
+      "Assembly file (.s)",
+      "Linker (ld)",
+      "Word",
+      "Program Counter (PC) — r15",
+      "Stack Pointer (SP) — r13",
+      "Link Register (LR) — r14",
+      "Immediate Addressing",
+      "Direct Addressing",
+      "Indirect Addressing",
+      "Relative Addressing",
+      "Opcode (Operation Code)",
+      "Architecture",
+      "Micro-architecture",
+      "Assembler (as)",
+      "LDR (Load Register)",
+      "STR (Store Register)",
+      "RISC (Reduced Instruction Set Computer)",
+      "CISC (Complex Instruction Set Computer)",
+      "Displacement (Indexed) Addressing"
+    ];
+
+    /* ── PART III: ENUMERATION ───────────────────────────────────────────── */
+    var ENUM_STEMS = [
+      "Enumerate the 3 phases in the lifecycle of a program from writing to execution (Code Time, Compile Time, Run Time — one per line).",
+      "Enumerate the 4 tools/stages inside the gcc compilation pipeline in correct order, from source code to final executable (one per line).",
+      "Enumerate the 3 factors that determine what makes programs run fast, as discussed in the ISA lecture.",
+      "Enumerate the 4 elements that make up a complete machine instruction, as described in Stallings' ISA model (one per line).",
+      "Enumerate the 3 basic types of ARM assembly instructions and give ONE example instruction for each (format: type — example).",
+      "Enumerate all 7 addressing modes covered in the ISA lecture (one per line, in any order).",
+      "Enumerate 5 characteristics of RISC architecture (one per line).",
+      "Enumerate 3 characteristics of CISC architecture (one per line).",
+      "Enumerate the 4 special-purpose registers of ARM, including their register number and common name (format: rN — Name).",
+      "Enumerate the 4 address instruction formats (zero through three addresses) with a one-line description of each (format: N-address — description).",
+      "Enumerate the 4 types of operands that instructions can work with, as classified by Stallings.",
+      "Enumerate the 3 categories of instruction types according to Stallings, and give two example operations for each (format: Category — example1, example2).",
+      "Enumerate 5 logical/bitwise operations supported by a typical ISA as described in the lecture.",
+      "Enumerate the 3 steps the Control Unit performs when processing an instruction, in the correct order.",
+      "Enumerate the 3 phases of program translation and name ONE tool or output associated with each (format: phase — tool/output)."
+    ];
+
+    var ENUM_OFFICIAL = [
+      "Code Time; Compile Time; Run Time",
+      "Compiler (cpp/cc1); Assembler (as); Linker (ld); Output: a.out",
+      "Algorithm; Compiler translation to machine code; ISA and hardware implementation",
+      "Opcode; Source operand reference; Result operand reference; Next instruction reference",
+      "Arithmetic — ADD/SUB/MOV; Data Transfer — LDR/STR; Control Transfer — B/BX/BL",
+      "Immediate; Direct; Indirect; Register; Register Indirect; Displacement (Indexed); Stack",
+      "Small optimised instruction set; Memory access via LOAD/STORE only; One instruction per clock cycle; Fixed-length instructions; Easier to debug/optimise",
+      "Larger complex instruction set; Variable-length instructions; Multiple clock cycles per instruction",
+      "r13 — SP (Stack Pointer); r14 — LR (Link Register); r15 — PC (Program Counter); CPSR — Current Program Status Register",
+      "0-address — implicit stack-based; 1-address — uses accumulator; 2-address — one operand doubles as result; 3-address — all three explicit",
+      "Addresses; Numbers; Characters; Logical Data",
+      "Data Transfer — LOAD, STORE; Data Processing — ADD, AND; Control — BRANCH, CALL",
+      "AND; OR; NOT; XOR; Shift (logical or arithmetic)",
+      "Fetch the instruction from memory; Decode the instruction; Execute / move data and ensure ALU performs the correct operation",
+      "Code Time — source file (.c); Compile Time — gcc/assembler; Run Time — hardware"
+    ];
+
+    /* Key detail for answer key panel */
+    var ENUM_KEY_DETAIL = [
+      { title:"1. Three phases of program lifecycle",
+        lines:["Code Time","Compile Time","Run Time"] },
+      { title:"2. Four stages in gcc pipeline (in order)",
+        lines:["1. Compiler (cpp / cc1) — C → Assembly","2. Assembler (as) — Assembly → Object (.o)","3. Linker (ld) — Object + Libraries → Executable","4. Output: a.out (executable)"] },
+      { title:"3. Three factors that make programs run fast",
+        lines:["Algorithm","Compiler translation to machine code","ISA and hardware implementation"] },
+      { title:"4. Four elements of a machine instruction",
+        lines:["Opcode (operation code)","Source operand reference","Result operand reference","Next instruction reference"] },
+      { title:"5. Three basic ARM instruction types (with example)",
+        lines:["Arithmetic — e.g. ADD, SUB, MOV","Data Transfer — e.g. LDR, STR","Control Transfer — e.g. B, BX, BL"] },
+      { title:"6. Seven addressing modes",
+        lines:["Immediate","Direct","Indirect","Register","Register Indirect","Displacement (Indexed)","Stack / Zero-address"] },
+      { title:"7. Five characteristics of RISC",
+        lines:["Small, highly optimised set of instructions","Memory accessed only through specific LOAD/STORE instructions","One instruction per clock cycle","Instructions are the same size and fixed format","Easier to debug — more reliable processors"] },
+      { title:"8. Three characteristics of CISC",
+        lines:["Larger, more complex instruction set","Variable-length instructions","Multiple clock cycles per instruction"] },
+      { title:"9. Four ARM special-purpose registers",
+        lines:["r13 — SP (Stack Pointer)","r14 — LR (Link Register)","r15 — PC (Program Counter)","CPSR — Current Program Status Register"] },
+      { title:"10. Four address formats",
+        lines:["0-address — all operands implicit; uses a stack (PUSH/POP + ADD)","1-address — one explicit operand; second is implicit accumulator (AC)","2-address — one address doubles as operand and result destination","3-address — all three operands (two inputs + result) explicitly specified"] },
+      { title:"11. Four types of operands (Stallings)",
+        lines:["Addresses (immediate, direct, indirect, stack)","Numbers (integer, floating point, packed decimal)","Characters (ASCII)","Logical Data (bits, flags)"] },
+      { title:"12. Three instruction categories (Stallings) with examples",
+        lines:["Data Transfer — LOAD, STORE, PUSH, POP","Data Processing — ADD, SUB, AND, OR","Control — BRANCH, CALL, RETURN, SKIP"] },
+      { title:"13. Five logical/bitwise operations",
+        lines:["AND","OR","NOT","XOR","Shift (logical or arithmetic)"] },
+      { title:"14. Three Control Unit steps (in order)",
+        lines:["1. Fetch the instruction from memory","2. Decode the instruction","3. Execute — move data to appropriate places and ensure the ALU performs the correct operation"] },
+      { title:"15. Three phases of program translation with tool/output",
+        lines:["Code Time — source file (.c) written by programmer","Compile Time — gcc (compiler + assembler + linker) produces executable","Run Time — hardware (CPU) executes the machine code"] }
+    ];
+
+    /* Grading helpers for enumeration */
+    var ENUM_SETS = [
+      /* 0 */ [["code time","code"],["compile time","compile"],["run time","runtime","run"]],
+      /* 1 */ [["compiler","cpp","cc1"],["assembler","as"],["linker","ld","linkage editor"],["a.out","executable","output"]],
+      /* 2 */ [["algorithm"],["compiler","compiler translation","translation to machine"],["isa","hardware","hardware implementation","isa and hardware"]],
+      /* 3 */ [["opcode","operation code","op code"],["source operand","source"],["result operand","result"],["next instruction","next"]],
+      /* 4 - ordered pairs, handled specially */ null,
+      /* 5 */ [["immediate"],["direct"],["indirect"],["register"],["register indirect"],["displacement","indexed"],["stack","zero address","zero-address"]],
+      /* 6 */ [["small","optimised","optimized","reduced","few instructions","simple"],["load","store","memory access","ldr","str"],["one instruction","one clock","single clock","1 instruction per clock"],["fixed","same size","fixed length","same length"],["debug","reliable","optimize","optimise","easier"]],
+      /* 7 */ [["variable","complex","larger","many","multiple instructions"],["variable length","variable-length","different sizes","different length","multiple lengths"],["multiple clock","multiple cycles","more than one cycle","several cycles"]],
+      /* 8 - ordered pairs */ null,
+      /* 9 - ordered */ null,
+      /* 10 */ [["addresses","address"],["numbers","number","integer","floating","numeric"],["characters","character","ascii","char","text"],["logical","flag","flags","boolean","bit","bits"]],
+      /* 11 */ [["data transfer","load","store","push","pop","move"],["data processing","arithmetic","logical","add","sub","and","or"],["control","branch","call","return","jump","skip"]],
+      /* 12 */ [["and"],["or"],["not"],["xor"],["shift","rotate","logical shift","arithmetic shift"]],
+      /* 13 - ordered */ null,
+      /* 14 - ordered pairs, handled specially */ null
+    ];
+
+    function norm(s) {
+      return String(s||"").toLowerCase()
+        .replace(/['']/g,"'").replace(/\//g," ").replace(/-/g," ")
+        .replace(/[()[\]]/g,"").replace(/\s+/g," ")
+        .replace(/[.,;:]/g,"").trim();
+    }
+
+    function tok(userNorm, phrase) {
+      var p = norm(phrase);
+      if (!p || !userNorm) return false;
+      if (userNorm === p) return true;
+      if (p.length >= 4 && userNorm.indexOf(p) !== -1) return true;
+      if (p.length <= 3 && userNorm === p) return true;
+      return false;
+    }
+
+    function lineMatches(lineNorm, alts) {
+      return alts.some(function(a){ return tok(lineNorm,a); });
+    }
+
+    function parseLines(raw) {
+      return String(raw||"").split(/\r?\n/)
+        .map(function(l){ return norm(l.replace(/^\s*\d+[\.\)]\s*/,"").replace(/^[-*•]\s*/,"")); })
+        .filter(Boolean);
+    }
+
+    function setCorrect(userLines, keysPerLine) {
+      if (userLines.length < keysPerLine.length) return false;
+      var used = {};
+      for (var e = 0; e < keysPerLine.length; e++) {
+        var found = false;
+        for (var u = 0; u < userLines.length; u++) {
+          if (used[u]) continue;
+          if (lineMatches(userLines[u], keysPerLine[e])) { used[u]=true; found=true; break; }
+        }
+        if (!found) return false;
+      }
+      return true;
+    }
+
+    function orderedLines(userLines, keysPerLine) {
+      if (userLines.length < keysPerLine.length) return false;
+      for (var i = 0; i < keysPerLine.length; i++) {
+        if (!lineMatches(userLines[i], keysPerLine[i])) return false;
+      }
+      return true;
+    }
+
+    /* Item 4: type — example pairs (any order) */
+    var INSTR_PAIRS = [
+      { type:["arithmetic","arith","add","sub","mov"], ex:["add","sub","mov","mul","div"] },
+      { type:["data transfer","transfer","ldr","str","load","store"], ex:["ldr","str","load","store"] },
+      { type:["control","branch","jump","bx","bl","call","b"], ex:["b","bx","bl","branch","call","jump","return"] }
+    ];
+    function instrPairsOk(userLines) {
+      if (userLines.length < 3) return false;
+      var used = {};
+      for (var p = 0; p < INSTR_PAIRS.length; p++) {
+        var found = false;
+        for (var u = 0; u < userLines.length; u++) {
+          if (used[u]) continue;
+          var ln = userLines[u];
+          var tOk = INSTR_PAIRS[p].type.some(function(t){ return tok(ln,t); });
+          var eOk = INSTR_PAIRS[p].ex.some(function(e){ return tok(ln,e); });
+          if (tOk && eOk) { used[u]=true; found=true; break; }
+        }
+        if (!found) return false;
+      }
+      return true;
+    }
+
+    /* Item 8: ARM special registers (rN — Name, any order) */
+    var ARM_REGS = [
+      { reg:["r13","13","sp","stack pointer"], name:["sp","stack pointer"] },
+      { reg:["r14","14","lr","link register"], name:["lr","link register"] },
+      { reg:["r15","15","pc","program counter"], name:["pc","program counter"] },
+      { reg:["cpsr","current program status"], name:["cpsr","current program status","status register","flags"] }
+    ];
+    function armRegsOk(userLines) {
+      if (userLines.length < 4) return false;
+      var used = {};
+      for (var p = 0; p < ARM_REGS.length; p++) {
+        var found = false;
+        for (var u = 0; u < userLines.length; u++) {
+          if (used[u]) continue;
+          var ln = userLines[u];
+          var rOk = ARM_REGS[p].reg.some(function(r){ return tok(ln,r); });
+          var nOk = ARM_REGS[p].name.some(function(n){ return tok(ln,n); });
+          if (rOk && nOk) { used[u]=true; found=true; break; }
+        }
+        if (!found) return false;
+      }
+      return true;
+    }
+
+    /* Item 9: four address formats in order */
+    var ADDR_FORMATS = [
+      ["zero","0 address","zero address","stack based","implicit"],
+      ["one","1 address","accumulator","one address"],
+      ["two","2 address","two address","doubles as"],
+      ["three","3 address","three address","all three","explicit"]
+    ];
+
+    /* Item 13: CU steps ordered */
+    var CU_STEPS = [
+      ["fetch","fetches","instruction from memory","fetches the instruction"],
+      ["decode","decodes"],
+      ["execute","move data","moves data","alu","appropriate"]
+    ];
+
+    /* Item 14: phase — tool pairs (ordered or set) */
+    var PHASE_PAIRS = [
+      { ph:["code time","code","writing","source"], tool:["c","source","hello c",".c","programmer"] },
+      { ph:["compile time","compile","compilation"], tool:["gcc","compiler","assembler","linker","cc1","as","ld"] },
+      { ph:["run time","runtime","execution","running"], tool:["hardware","cpu","processor","machine","executes"] }
+    ];
+    function phasePairsOk(userLines) {
+      if (userLines.length < 3) return false;
+      var used = {};
+      for (var p = 0; p < PHASE_PAIRS.length; p++) {
+        var found = false;
+        for (var u = 0; u < userLines.length; u++) {
+          if (used[u]) continue;
+          var ln = userLines[u];
+          var phOk = PHASE_PAIRS[p].ph.some(function(x){ return tok(ln,x); });
+          var tOk  = PHASE_PAIRS[p].tool.some(function(x){ return tok(ln,x); });
+          if (phOk && tOk) { used[u]=true; found=true; break; }
+        }
+        if (!found) return false;
+      }
+      return true;
+    }
+
+    function enumItemCorrect(idx, raw) {
+      var lines = parseLines(raw);
+      if (!lines.length) return false;
+      switch (idx) {
+        case 0:  return orderedLines(lines, ENUM_SETS[0]);
+        case 1:  return setCorrect(lines, ENUM_SETS[1]);
+        case 2:  return setCorrect(lines, ENUM_SETS[2]);
+        case 3:  return setCorrect(lines, ENUM_SETS[3]);
+        case 4:  return instrPairsOk(lines);
+        case 5:  return setCorrect(lines, ENUM_SETS[5]);
+        case 6:  return setCorrect(lines, ENUM_SETS[6]);
+        case 7:  return setCorrect(lines, ENUM_SETS[7]);
+        case 8:  return armRegsOk(lines);
+        case 9:  return orderedLines(lines, ADDR_FORMATS);
+        case 10: return setCorrect(lines, ENUM_SETS[10]);
+        case 11: return setCorrect(lines, ENUM_SETS[11]);
+        case 12: return setCorrect(lines, ENUM_SETS[12]);
+        case 13: return orderedLines(lines, CU_STEPS);
+        case 14: return phasePairsOk(lines);
+        default: return false;
+      }
+    }
+
+    function idMatches(input, acceptedList) {
+      var n = norm(input);
+      if (!n) return false;
+      return acceptedList.some(function(acc) {
+        var a = norm(acc);
+        if (n === a) return true;
+        if (a.length >= 2 && a.length <= 3) return n === a;
+        if (a.length >= 4 && (n.indexOf(a) !== -1 || a.indexOf(n) !== -1)) return true;
+        return false;
+      });
+    }
+
+    var LETTERS = ["A","B","C","D"];
+
+    /* ── GLOW HELPERS ───────────────────────────────────────────────────── */
+    function clearGlows() {
+      document.querySelectorAll(".mc-item.answer-correct,.mc-item.answer-incorrect,.id-item.answer-correct,.id-item.answer-incorrect,.enum-item.answer-correct,.enum-item.answer-incorrect")
+        .forEach(function(el){ el.classList.remove("answer-correct","answer-incorrect"); });
+    }
+
+    function applyMcGlow(qnum) {
+      var idx = MC_QUESTIONS.findIndex(function(q){ return q.n===qnum; });
+      if (idx<0) return;
+      var block = document.querySelector('.mc-item[data-q="'+qnum+'"]');
+      if (!block) return;
+      block.classList.remove("answer-correct","answer-incorrect");
+      var sel = document.querySelector('input[name="mc_'+qnum+'"]:checked');
+      if (!sel) return;
+      block.classList.add(sel.value===MC_ANSWERS[idx]?"answer-correct":"answer-incorrect");
+    }
+
+    function applyIdGlow(num) {
+      var block = document.querySelector('.id-item[data-id="'+num+'"]');
+      var inp   = document.getElementById("id_"+num);
+      if (!block||!inp) return;
+      block.classList.remove("answer-correct","answer-incorrect");
+      if (!String(inp.value).trim()) return;
+      block.classList.add(idMatches(inp.value,ID_KEYS[num-1])?"answer-correct":"answer-incorrect");
+    }
+
+    function applyEnumGlow(num) {
+      var block = document.querySelector('.enum-item[data-enum="'+num+'"]');
+      var ta    = document.getElementById("enum_"+num);
+      if (!block||!ta) return;
+      block.classList.remove("answer-correct","answer-incorrect");
+      if (!String(ta.value).trim()) return;
+      block.classList.add(enumItemCorrect(num-1,ta.value)?"answer-correct":"answer-incorrect");
+    }
+
+    /* ── RENDER ─────────────────────────────────────────────────────────── */
+    function renderMC() {
+      var c = document.getElementById("mc-container");
+      var f = document.createDocumentFragment();
+      MC_QUESTIONS.forEach(function(item) {
+        var wrap = document.createElement("div");
+        wrap.className = "mc-item";
+        wrap.setAttribute("data-q", String(item.n));
+        var stem = document.createElement("p");
+        stem.className = "mc-stem";
+        stem.textContent = item.n+". "+item.q;
+        var opts = document.createElement("div");
+        opts.className = "mc-options";
+        item.opts.forEach(function(text,oi) {
+          var lab = document.createElement("label");
+          var radio = document.createElement("input");
+          radio.type = "radio"; radio.name = "mc_"+item.n; radio.value = LETTERS[oi];
+          var span = document.createElement("span");
+          span.textContent = LETTERS[oi]+") "+text;
+          radio.addEventListener("change",function(){ applyMcGlow(item.n); });
+          lab.appendChild(radio); lab.appendChild(span);
+          opts.appendChild(lab);
+        });
+        wrap.appendChild(stem); wrap.appendChild(opts);
+        f.appendChild(wrap);
+      });
+      c.appendChild(f);
+    }
+
+    function renderID() {
+      var c = document.getElementById("id-container");
+      var f = document.createDocumentFragment();
+      ID_QUESTIONS.forEach(function(text,i) {
+        var num = i+1;
+        var wrap = document.createElement("div");
+        wrap.className = "id-item";
+        wrap.setAttribute("data-id", String(num));
+        var lab = document.createElement("label");
+        lab.setAttribute("for","id_"+num);
+        lab.textContent = num+". "+text;
+        var inp = document.createElement("input");
+        inp.type="text"; inp.name="id_"+num; inp.id="id_"+num;
+        inp.setAttribute("autocomplete","off");
+        inp.addEventListener("input",function(){ applyIdGlow(num); });
+        wrap.appendChild(lab); wrap.appendChild(inp);
+        f.appendChild(wrap);
+      });
+      c.appendChild(f);
+    }
+
+    function renderEnum() {
+      var c = document.getElementById("enum-container");
+      if (!c) return;
+      var f = document.createDocumentFragment();
+      ENUM_STEMS.forEach(function(stem,i) {
+        var num = i+1;
+        var wrap = document.createElement("div");
+        wrap.className = "enum-item";
+        wrap.setAttribute("data-enum", String(num));
+        var lab = document.createElement("label");
+        lab.setAttribute("for","enum_"+num);
+        lab.textContent = num+". "+stem;
+        var ta = document.createElement("textarea");
+        ta.id="enum_"+num; ta.name="enum_"+num;
+        ta.setAttribute("rows","5"); ta.setAttribute("autocomplete","off");
+        ta.addEventListener("input",function(){ applyEnumGlow(num); });
+        wrap.appendChild(lab); wrap.appendChild(ta);
+        f.appendChild(wrap);
+      });
+      c.appendChild(f);
+    }
+
+    function renderAnswerKey() {
+      var el = document.getElementById("answer-key-content");
+      var html = "<p><strong>Part I — Multiple Choice</strong></p><div class='key-grid'>";
+      MC_ANSWERS.forEach(function(a,i){ html += "<div>"+(i+1)+". "+a+"</div>"; });
+      html += "</div><p style='margin-top:1rem'><strong>Part II — Identification</strong></p><div class='key-grid'>";
+      ID_OFFICIAL.forEach(function(a,i){ html += "<div>"+(i+1)+". "+esc(a)+"</div>"; });
+      html += "</div><p style='margin-top:1rem'><strong>Part III — Enumeration</strong></p>";
+      ENUM_KEY_DETAIL.forEach(function(blk) {
+        html += "<div style='margin-top:.85rem'><p style='margin:0 0 .35rem;font-weight:600'>"+esc(blk.title)+"</p><ul style='margin:0;padding-left:1.25rem'>";
+        blk.lines.forEach(function(ln){ html += "<li>"+esc(ln)+"</li>"; });
+        html += "</ul></div>";
+      });
+      el.innerHTML = html;
+    }
+
+    /* ── GRADE ──────────────────────────────────────────────────────────── */
+    function grade() {
+      clearGlows();
+      var mcCorrect=0, idCorrect=0, enumCorrect=0;
+      var mcRows=[], idRows=[], enumRows=[];
+
+      MC_QUESTIONS.forEach(function(item,i) {
+        var sel = document.querySelector('input[name="mc_'+item.n+'"]:checked');
+        var user = sel ? sel.value : "—";
+        var ok = user===MC_ANSWERS[i];
+        if (ok) mcCorrect++;
+        mcRows.push({num:item.n,user:user,correct:MC_ANSWERS[i],ok:ok});
+      });
+
+      ID_QUESTIONS.forEach(function(_,i) {
+        var inp = document.getElementById("id_"+(i+1));
+        var raw = inp ? inp.value : "";
+        var ok = idMatches(raw,ID_KEYS[i]);
+        if (ok) idCorrect++;
+        idRows.push({num:i+1,user:raw.trim()||"—",ok:ok,official:ID_OFFICIAL[i]});
+      });
+
+      ENUM_STEMS.forEach(function(_,i) {
+        var ta = document.getElementById("enum_"+(i+1));
+        var raw = ta ? ta.value : "";
+        var ok = enumItemCorrect(i,raw);
+        if (ok) enumCorrect++;
+        enumRows.push({num:i+1,user:raw.trim()||"—",ok:ok,official:ENUM_OFFICIAL[i]});
+      });
+
+      var total = MC_QUESTIONS.length + ID_QUESTIONS.length + ENUM_STEMS.length;
+      var score = mcCorrect+idCorrect+enumCorrect;
+
+      document.getElementById("results-summary").textContent =
+        "Score: "+score+" / "+total+
+        " (Part I: "+mcCorrect+"/"+MC_QUESTIONS.length+
+        "; Part II: "+idCorrect+"/"+ID_QUESTIONS.length+
+        "; Part III: "+enumCorrect+"/"+ENUM_STEMS.length+")";
+
+      var html = "<h3>Part I — Multiple Choice</h3><table><thead><tr><th>#</th><th>Your Answer</th><th>Key</th></tr></thead><tbody>";
+      mcRows.forEach(function(r){
+        html += "<tr class='"+(r.ok?"correct":"incorrect")+"'><td>"+r.num+"</td><td>"+esc(r.user)+"</td><td>"+esc(r.correct)+"</td></tr>";
+      });
+      html += "</tbody></table>";
+
+      html += "<h3>Part II — Identification</h3><table><thead><tr><th>#</th><th>Your Answer</th><th>Status</th></tr></thead><tbody>";
+      idRows.forEach(function(r){
+        html += "<tr class='"+(r.ok?"correct":"incorrect")+"'><td>"+r.num+"</td><td>"+esc(r.user)+"</td><td>"+(r.ok?"Correct":"Incorrect — key: "+esc(r.official))+"</td></tr>";
+      });
+      html += "</tbody></table>";
+
+      html += "<h3>Part III — Enumeration</h3><table><thead><tr><th>#</th><th>Your Answer</th><th>Key (summary)</th></tr></thead><tbody>";
+      enumRows.forEach(function(r){
+        var u = r.user.length>200 ? r.user.slice(0,200)+"…" : r.user;
+        html += "<tr class='"+(r.ok?"correct":"incorrect")+"'><td>"+r.num+"</td><td>"+esc(u)+"</td><td>"+esc(r.official)+"</td></tr>";
+      });
+      html += "</tbody></table>";
+
+      document.getElementById("results-detail").innerHTML = html;
+
+      mcRows.forEach(function(r){
+        var b=document.querySelector('.mc-item[data-q="'+r.num+'"]');
+        if(b) b.classList.add(r.ok?"answer-correct":"answer-incorrect");
+      });
+      idRows.forEach(function(r){
+        var b=document.querySelector('.id-item[data-id="'+r.num+'"]');
+        if(b) b.classList.add(r.ok?"answer-correct":"answer-incorrect");
+      });
+      enumRows.forEach(function(r){
+        var b=document.querySelector('.enum-item[data-enum="'+r.num+'"]');
+        if(b) b.classList.add(r.ok?"answer-correct":"answer-incorrect");
+      });
+
+      var panel = document.getElementById("results-panel");
+      panel.classList.remove("hidden");
+      panel.scrollIntoView({behavior:"smooth",block:"start"});
+    }
+
+    function esc(t) {
+      var d = document.createElement("div"); d.textContent = t; return d.innerHTML;
+    }
+
+    /* ── DOWNLOAD ───────────────────────────────────────────────────────── */
+    function downloadFile() {
+      var html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      var blob = new Blob([html], {type:"text/html;charset=utf-8"});
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "exam-isa-week14.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+
+    /* ── INIT ───────────────────────────────────────────────────────────── */
+    function init() {
+      renderMC();
+      renderID();
+      renderEnum();
+      renderAnswerKey();
+
+      var today = new Date().toISOString().slice(0,10);
+      var dateInp = document.getElementById("exam_date");
+      if (dateInp) dateInp.value = today;
+
+      document.getElementById("exam-form").addEventListener("submit",function(e){
+        e.preventDefault(); grade();
+      });
+
+      document.getElementById("btn-reset").addEventListener("click",function(){
+        if (!confirm("Clear all answers? This cannot be undone.")) return;
+        clearGlows();
+        document.getElementById("exam-form").reset();
+        document.getElementById("results-panel").classList.add("hidden");
+        if (dateInp) dateInp.value = today;
+      });
+
+      document.getElementById("btn-print").addEventListener("click",function(){
+        window.print();
+      });
+
+      document.getElementById("btn-download").addEventListener("click",downloadFile);
+
+      document.getElementById("btn-toggle-key").addEventListener("click",function(){
+        var key = document.getElementById("answer-key-content");
+        var hidden = key.classList.toggle("hidden");
+        this.textContent = hidden ? "Show Answer Key" : "Hide Answer Key";
+      });
+    }
+
+    if (document.readyState==="loading") {
+      document.addEventListener("DOMContentLoaded",init);
+    } else {
+      init();
+    }
+  })();
+  </script>
+</body>
+</html>
